@@ -1,4 +1,4 @@
-// export const BACKEND_API_URL ="http://ec2-13-50-245-162.eu-north-1.compute.amazonaws.com/api"
+
 
 const PROD_BACKEND_API_URL =
   "http://ec2-13-50-245-162.eu-north-1.compute.amazonaws.com/api";
