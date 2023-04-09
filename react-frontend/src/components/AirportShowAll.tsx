@@ -28,7 +28,9 @@ export const AirportShowAll = () => {
     const [loading, setLoading] = useState(true);
     const [airports, setAirport] = useState([]);
 
+
     useEffect(() => {
+
         fetch(`${BACKEND_API_URL}/list-airport/`)
             .then(response => response.json())
             .then(data => {
