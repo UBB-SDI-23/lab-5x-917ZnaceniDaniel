@@ -20,7 +20,7 @@ function App() {
         <AppMenu />
         <Routes>
           <Route path="/home" element={<AppHome />} />
-          <Route path="/list-airport/" element={<AirportShowAll />} />
+          <Route path="api/list-airport/" element={<AirportShowAll />} />
           <Route path="/create-airport/" element={<AirportCreate />} />
           <Route
             path="/delete-airport/:airportId"
