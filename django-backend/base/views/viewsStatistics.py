@@ -32,15 +32,17 @@ def get_airline_revenue_report():
     return airline_revenue_dto_list
 
 
+# def airline_revenue_report_view(request):
+#     airline_dtos = get_airline_revenue_report()
+#     # serializer = AirlineRevenueDTOSerializer(airline_dtos, many=True)
+#     # return Response(serializer.data)
+#     data = [{'airline_name': dto.airline_name, 'revenue': dto.revenue} for dto in airline_dtos]
+#     return JsonResponse(data)
+
 def airline_revenue_report_view(request):
     airline_dtos = get_airline_revenue_report()
-    data = {
-        'airlines': [
-            {'airline_name': dto.airline_name, 'revenue': dto.revenue}
-            for dto in airline_dtos
-        ]
-    }
-    return JsonResponse(data)
+    data = [{"airline_name": dto.airline_name, "revenue": dto.revenue} for dto in airline_dtos]
+    return JsonResponse(data, safe=False)
 
 
 # ----------------------------------------------
@@ -57,7 +59,6 @@ def flights_passengers_report(request):
               item['num_passengers'] == max_passengers]
 
     result.sort(key=lambda x: x.passengers, reverse=True)
-
     response_data = {
         'flights': [{'id': item.flight_id, 'passengers': item.passengers} for item in
                     result]

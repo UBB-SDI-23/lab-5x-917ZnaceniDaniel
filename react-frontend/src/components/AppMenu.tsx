@@ -2,6 +2,7 @@ import { Box, AppBar, Toolbar, IconButton, Typography, Button } from "@mui/mater
 import { Link, useLocation } from "react-router-dom";
 import LocalAirportIcon from '@mui/icons-material/LocalAirport';
 import FlightLandIcon from '@mui/icons-material/FlightLand';
+import AirlinesIcon from '@mui/icons-material/Airlines';
 
 export const AppMenu = () => {
     const location = useLocation();
@@ -34,15 +35,15 @@ export const AppMenu = () => {
 						Airports
 					</Button>
 
-					{/* <Button
-						variant={path.startsWith("/tennisplayers") ? "outlined" : "text"}
-						to="/tennisplayers/avgyoecoaches"
+					<Button
+						variant={path.startsWith("/airline-stats") ? "outlined" : "text"}
+						to="/airline-stats"
 						component={Link}
 						color="inherit"
 						sx={{ mr: 5 }}
-						startIcon={<SportsIcon />}>
-						Players Ordered By Avg Experience Coach
-					</Button> */}
+						startIcon={<AirlinesIcon />}>
+						Top 3 Airlines ordered by their anual revenue
+					</Button>
 				</Toolbar>
 			</AppBar>
 		</Box>

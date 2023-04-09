@@ -1,6 +1,12 @@
 from rest_framework import serializers
 from base.models import *
 
+#
+# class AirlineRevenueDTOSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = AirlineRevenueDTO
+#         fields = '__all__'
+
 
 class AirportSerializer(serializers.ModelSerializer):
     class Meta:
@@ -74,7 +80,6 @@ class AirlineRevenueDTOSerializer(serializers.ModelSerializer):
     class Meta:
         model = AirlineRevenueDTO
         fields = '__all__'
-
 
 # class MyAirlineSerializer(serializers.ModelSerializer):
 #     class Meta:

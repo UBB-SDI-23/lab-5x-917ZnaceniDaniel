@@ -103,7 +103,10 @@ class Ticket(models.Model):
         ]
 
 
-class AirlineRevenueDTO:
+class AirlineRevenueDTO(models.Model):
+    airline_name = models.CharField(max_length=100)
+    revenue = models.IntegerField()
+
     def __init__(self, airline_name, revenue):
         self.airline_name = airline_name
         self.revenue = revenue
