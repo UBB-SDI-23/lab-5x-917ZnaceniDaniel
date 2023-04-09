@@ -31,5 +31,5 @@ urlpatterns = [
         extra_context={'schema_url': 'api_schema'}
     ), name='swagger-ui'),
     path('admin/', admin.site.urls),
-    path('', include('base.urls')),
+    path('api/', include('base.urls')),
 ]
