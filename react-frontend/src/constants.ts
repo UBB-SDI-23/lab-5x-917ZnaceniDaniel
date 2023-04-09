@@ -1,1 +1,1 @@
-export const BACKEND_API_URL ="http://ec2-13-50-245-162.eu-north-1.compute.amazonaws.com/api"
+export const BACKEND_API_URL ="https://ec2-13-50-245-162.eu-north-1.compute.amazonaws.com/api"
