@@ -4,12 +4,17 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from base.models import *
+from base.models.AircraftModel import Aircraft
+from base.models.AirlineModel import Airline
+from base.models.DTOModels import AirlineRevenueDTO, FlightPassengersDTO
+from base.models.FlightModel import Flight
 from base.serializers import *
 from django.db.models import Count, Avg
 
 
 # ----------------------------------------------------------------------------------------statistical report
 # get the top 3 airlines with the most revenue per aircraft
+from base.serializers.AircraftSerializer import AircraftSerializer
 
 
 def get_airline_revenue_report():

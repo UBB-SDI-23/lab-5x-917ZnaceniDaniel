@@ -2,11 +2,15 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from base.models import *
+from base.models.AirlineModel import Airline
 from base.serializers import *
 from django.db.models import Count, Avg
 
 
 # ----------------------------------------------------------------------------------------AIRLINE
+from base.serializers.AirlineSerializer import AirlineSerializer
+
+
 @api_view(['GET'])  # to only allow a get response
 def airlineHomePageView(request):
     api_url = {

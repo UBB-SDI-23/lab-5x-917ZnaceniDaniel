@@ -2,11 +2,13 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from base.models import *
+from base.models.TicketModel import Ticket
 from base.serializers import *
 from django.db.models import Count, Avg
 
 
 # --------------------------------------------------------------------------------------------------------TICKET
+from base.serializers.TicketSerializer import TicketSerializer
 
 
 @api_view(['GET'])  # to only allow a get response
