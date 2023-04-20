@@ -1,4 +1,4 @@
-from base import models
+from django.db import models
 
 
 class AirlineRevenueDTO(models.Model):

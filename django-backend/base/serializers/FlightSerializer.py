@@ -1,4 +1,4 @@
-from base import serializers
+from rest_framework import serializers
 from base.models.FlightModel import Flight
 
 
