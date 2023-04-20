@@ -14,6 +14,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 import os
 
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,10 +27,6 @@ SECRET_KEY = 'django-insecure-!iiz1!t^**@7fy#y39jsif!wanncu)r$1op5no)qy6%r80xspb
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-
-
-load_dotenv()
 
 ALLOWED_HOSTS = ['*']
 
@@ -87,8 +84,12 @@ WSGI_APPLICATION = 'airport.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': os.environ.get('DB_ENGINE'),
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASS'),
+        'HOST': os.environ.get('DB_HOST'),
+        'PORT': os.environ.get('DB_PORT'),
     }
 }
 
