@@ -1,19 +1,12 @@
-from django.http import JsonResponse
-from django.shortcuts import render, get_object_or_404
-
-# Create your views here.
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from base.models import *
 from base.models.AirportModel import Airport
-from base.serializers import *
-from django.db.models import Count, Avg
-
 from base.serializers.AirportSerializer import AirportSerializer
+from base.views.pagination import CustomPagination
 
 
-@api_view(['GET'])  # to only allow a get response
+@api_view(['GET'])
 def HomePageView(request):
     api_url = {
         'Airport': '/airport/',
@@ -24,7 +17,7 @@ def HomePageView(request):
 
 
 # --------------------------------------------------------------------------------------------AIRPORT
-@api_view(['GET'])  # to only allow a get response
+@api_view(['GET'])
 def airportHomePageView(request):
     api_url = {
         'List': '/list-airport/',
@@ -36,12 +29,13 @@ def airportHomePageView(request):
     return Response(api_url)
 
 
-# query the database, serialize the data and return it as a response
-@api_view(['GET'])  # to only allow a get response
+@api_view(['GET'])
 def airportList(request):
-    list_of_airports = Airport.objects.all()[:100]
-    serializer = AirportSerializer(list_of_airports, many=True)
-    return Response(serializer.data)
+    paginator = CustomPagination()
+    list_of_airports = Airport.objects.all()
+    paginated_list_of_airports = paginator.paginate_queryset(list_of_airports, request)
+    serializer = AirportSerializer(paginated_list_of_airports, many=True)
+    return paginator.get_paginated_response(serializer.data)
 
 
 @api_view(['POST'])
@@ -80,6 +74,8 @@ def deleteAirport(request, pk):
 
 @api_view(['GET'])
 def filter_airport(request, pk):
+    paginator = CustomPagination()
     list_of_airports = Airport.objects.filter(noTerminals__gt=pk).values()
-    serializer = AirportSerializer(list_of_airports, many=True)
-    return Response(serializer.data)
+    paginated_list_of_airports = paginator.paginate_queryset(list_of_airports, request)
+    serializer = AirportSerializer(paginated_list_of_airports, many=True)
+    return paginator.get_paginated_response(serializer.data)
