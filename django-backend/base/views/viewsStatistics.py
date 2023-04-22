@@ -18,14 +18,14 @@ from base.serializers.AircraftSerializer import AircraftSerializer
 
 
 def get_airline_revenue_report():
-    aircrafts = Aircraft.objects.all()
+    aircrafts = Aircraft.objects.all()[:100]
     airlines_revenue = {}
     for aircraft in aircrafts:
-        airline_name = aircraft.airlineName.name
+        airline_name = aircraft.airline_name.name
         if airline_name in airlines_revenue:
-            airlines_revenue[airline_name] += aircraft.airlineName.revenue
+            airlines_revenue[airline_name] += aircraft.airline_name.revenue
         else:
-            airlines_revenue[airline_name] = aircraft.airlineName.revenue
+            airlines_revenue[airline_name] = aircraft.airline_name.revenue
     sorted_airlines = sorted(airlines_revenue.items(), key=lambda x: x[1], reverse=True)
     airline_revenue_dto_list = []
     i = 0
@@ -80,7 +80,7 @@ def add_aircrafts(request, airline_id):
     airline = get_object_or_404(Airline, pk=airline_id)
     aircraft_data = request.data
     for aircraft in aircraft_data:
-        aircraft['airlineName'] = airline_id
+        aircraft['airline_name'] = airline_id
     serializer = AircraftSerializer(data=aircraft_data, many=True)
     if serializer.is_valid():
         serializer.save()

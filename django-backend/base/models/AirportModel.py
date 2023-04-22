@@ -12,5 +12,5 @@ class Airport(models.Model):
     timezone = models.CharField(max_length=100)
     elevation = models.IntegerField()
     capacity = models.IntegerField()
-    noGates = models.IntegerField()
-    noTerminals = models.IntegerField()
+    no_gates = models.IntegerField()
+    no_terminals = models.IntegerField()

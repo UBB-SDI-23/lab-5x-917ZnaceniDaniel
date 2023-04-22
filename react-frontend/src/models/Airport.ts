@@ -6,6 +6,6 @@ export interface Airport{
     timezone:string;
     elevation :number;
     capacity :number;
-    noGates:number
-    noTerminals :number;
+    no_gates:number
+    no_terminals :number;
 }

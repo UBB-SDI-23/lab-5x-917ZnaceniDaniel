@@ -45,10 +45,10 @@ export const AirportShowAll = () => {
 
     const sortAirports = () => {
         const sortedAirports = [...airports].sort((a: Airport, b:Airport) => {
-            if (a.noTerminals < b.noTerminals) {
+            if (a.no_terminals < b.no_terminals) {
                 return -1;
             }
-            if (a.noTerminals > b.noTerminals) {
+            if (a.no_terminals > b.no_terminals) {
                 return 1;
             }
             return 0;
@@ -108,8 +108,8 @@ export const AirportShowAll = () => {
                                 <TableCell align="center">{airport.timezone}</TableCell>
                                 <TableCell align="center">{airport.elevation}</TableCell>
                                 <TableCell align="center">{airport.capacity}</TableCell>
-                                <TableCell align="center">{airport.noGates}</TableCell>
-                                <TableCell align="center">{airport.noTerminals}</TableCell>
+                                <TableCell align="center">{airport.no_gates}</TableCell>
+                                <TableCell align="center">{airport.no_terminals}</TableCell>
                                 <TableCell align="right">
 										<IconButton
 											component={Link}

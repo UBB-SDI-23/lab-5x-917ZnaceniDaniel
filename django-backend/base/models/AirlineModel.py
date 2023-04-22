@@ -7,9 +7,8 @@ from rest_framework.exceptions import ValidationError
 
 class Airline(models.Model):
     name = models.CharField(max_length=100)
-    # logo = models.ImageField(upload_to='airlineLogos')
     headquarters = models.CharField(max_length=100)
     website = models.URLField()
-    establishedDate = models.DateField()
+    established_date = models.DateField()
     revenue = models.IntegerField()
-    numEmployees = models.IntegerField()
+    num_employees = models.IntegerField()

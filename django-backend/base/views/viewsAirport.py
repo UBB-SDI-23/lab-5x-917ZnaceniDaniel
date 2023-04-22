@@ -39,7 +39,7 @@ def airportHomePageView(request):
 # query the database, serialize the data and return it as a response
 @api_view(['GET'])  # to only allow a get response
 def airportList(request):
-    list_of_airports = Airport.objects.all()
+    list_of_airports = Airport.objects.all()[:100]
     serializer = AirportSerializer(list_of_airports, many=True)
     return Response(serializer.data)
 

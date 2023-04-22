@@ -40,12 +40,12 @@
 #     model = models.CharField(max_length=100)
 #     maxSpeed = models.IntegerField()
 #     seatingCapacity = models.IntegerField()
-#     fuelCapacity = models.IntegerField()
-#     wingSpan = models.IntegerField()
+#     fuel_capacity = models.IntegerField()
+#     wing_span = models.IntegerField()
 #     length = models.IntegerField()
-#     noEngines = models.IntegerField()
+#     no_engines = models.IntegerField()
 #     # flights = models.ManyToManyField('Flight')
-#     airlineName = models.ForeignKey(Airline, on_delete=models.CASCADE, default=None)
+#     airline_name = models.ForeignKey(Airline, on_delete=models.CASCADE, default=None)
 #
 #
 # class Flight(models.Model):

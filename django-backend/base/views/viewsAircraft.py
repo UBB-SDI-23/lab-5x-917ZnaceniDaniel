@@ -26,7 +26,7 @@ def aircraftHomePageView(request):
 # query the database, serialize the data and return it as a response
 @api_view(['GET'])  # to only allow a get response
 def aircraftList(request):
-    list_of_aircraft = Aircraft.objects.all().values('id')
+    list_of_aircraft = Aircraft.objects.all().values('id')[:100]
     # serializer = AircraftSerializer(list_of_aircraft, many=True)
     return Response(list_of_aircraft)
 

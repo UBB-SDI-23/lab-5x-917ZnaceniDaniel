@@ -26,7 +26,7 @@ def airlineHomePageView(request):
 # query the database, serialize the data and return it as a response
 @api_view(['GET'])  # to only allow a get response
 def airlineList(request):
-    list_of_airlines = Airline.objects.all().values('id')
+    list_of_airlines = Airline.objects.all().values('id')[:100]
     # serializer = AirlineSerializer(list_of_airlines, many=True)
     return Response(list_of_airlines)
 
