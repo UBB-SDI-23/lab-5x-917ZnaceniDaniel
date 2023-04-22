@@ -27,19 +27,24 @@ import { BACKEND_API_URL } from "../constants";
 export const AirportShowAll = () => {
     const [loading, setLoading] = useState(true);
     const [airports, setAirport] = useState([]);
+    const [page, setPage] = useState(1);
+    const [pageSize, setPageSize] = useState(10);
+    const current = (page - 1) * pageSize + 1;
 
-    {console.log(BACKEND_API_URL)}
+    // {console.log(BACKEND_API_URL)}
+    const fetchAirports = async() => {
+        setLoading(true);
+        const response = await fetch(
+            `${BACKEND_API_URL}/list-airport/?page=${page}&page_size=${pageSize}`
+        );
+        const {count, next, previous, results} = await response.json();
+        setAirport(results);
+        setLoading(false);
+    };
     
     useEffect(() => {
-        
-        fetch(`${BACKEND_API_URL}/list-airport/`)
-            .then(response => response.json())
-            .then(data => {
-                setAirport(data);
-                setLoading(false);
-            }
-            );
-    }, []);
+        fetchAirports();
+    }, [page]);
 
     console.log(airports);
 
@@ -81,6 +86,7 @@ export const AirportShowAll = () => {
         )}
 
         {!loading && airports.length > 0 && (
+            <>
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 900 }} aria-label="simple table">
                     <TableHead>
@@ -100,7 +106,7 @@ export const AirportShowAll = () => {
                         {airports.map((airport:Airport, index) => (
                             <TableRow key={airport.id}>
                                 <TableCell component="th" scope="row">
-                                    {index + 1}
+                                    {index + current}
                                 </TableCell>
                                 <TableCell align="center">{airport.name}</TableCell>
                                 <TableCell align="center">{airport.city}</TableCell>
@@ -133,7 +139,10 @@ export const AirportShowAll = () => {
                 </TableBody>
                 </Table>
             </TableContainer>
+            <Button disabled={page === 1} onClick={() => setPage(page-1)}>Previous</Button>
+            <Button disabled={airports.length < pageSize} onClick={() => setPage(page + 1)}>Next</Button>
+            </>
         )}
     </Container>
-    )
+    );
   };
