@@ -11,6 +11,7 @@ import { AirportCreate } from "./components/AirportCreate";
 import { AirportDelete } from "./components/AirportDelete";
 import { AirportUpdate } from "./components/AirportUpdate";
 import { AirlineRevenueStatistics } from "./components/AirlineRevenueStatistics";
+import { AirportDetail } from "./components/AirportDetail";
 function App() {
   const [count, setCount] = useState(0);
 
@@ -27,6 +28,7 @@ function App() {
             element={<AirportDelete />}
           />
           <Route path="update-airport/:airportId" element={<AirportUpdate />} />
+          <Route path="read-airport/:airportId" element={<AirportDetail />} />
           <Route path="/airline-stats/" element={< AirlineRevenueStatistics/>} />
         </Routes>
       </Router>

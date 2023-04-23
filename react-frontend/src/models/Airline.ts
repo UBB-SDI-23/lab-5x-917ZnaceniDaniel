@@ -3,7 +3,7 @@ export interface Airline{
     name :string;
     headquarters :string;
     website:string;
-    establishedDate:Date;
+    established_date:Date;
     revenue :number;
-    numEmployees: number;
+    num_employees: number;
 }

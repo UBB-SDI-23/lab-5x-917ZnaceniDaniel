@@ -2,6 +2,8 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from base.models.AirportModel import Airport
+from base.models.FlightModel import Flight
+from base.serializers.FlightSerializer import FlightSerializer
 from base.serializers.AirportSerializer import AirportSerializer
 from base.views.pagination import CustomPagination
 
@@ -50,8 +52,22 @@ def createAirport(request):
 def readAirport(request, pk):
     try:
         airport = Airport.objects.get(id=pk)
+        flights = Flight.objects.all()
+        departure_flights = []
+        arrival_flights = []
+        for item in flights:
+            if item.departure_airport.id == airport.id:
+                departure_flights.append(item)
+            if item.arrival_airport.id == airport.id:
+                arrival_flights.append(item)
+        departure_flights_serializer = FlightSerializer(departure_flights, many=True)
+        arrival_flights_serializer = FlightSerializer(arrival_flights, many=True)
+
         serializer = AirportSerializer(airport, many=False)
-        return Response(serializer.data)
+        airport_data = serializer.data
+        airport_data['departure_flights'] = departure_flights_serializer.data
+        airport_data['arrival_flights'] = arrival_flights_serializer.data
+        return Response(airport_data)
     except Airport.DoesNotExist:
         return Response({"error": "Airport not found."}, status=status.HTTP_404_NOT_FOUND)
 
@@ -79,3 +95,4 @@ def filter_airport(request, pk):
     paginated_list_of_airports = paginator.paginate_queryset(list_of_airports, request)
     serializer = AirportSerializer(paginated_list_of_airports, many=True)
     return paginator.get_paginated_response(serializer.data)
+

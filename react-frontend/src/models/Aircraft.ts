@@ -4,11 +4,11 @@ export interface Aircraft {
     name :string;
     manufacturer:string;
     model :string;
-    maxSpeed :number;
-    seatingCapacity :number;
+    max_speed :number;
+    seating_capacity :number;
     fuelCapacity :number;
-    wingSpan :number;
+    wing_span :number;
     length :number;
-    noEngines :number;
-    airlineName :Airline;
+    no_engines :number;
+    airline_name :Airline;
 }
