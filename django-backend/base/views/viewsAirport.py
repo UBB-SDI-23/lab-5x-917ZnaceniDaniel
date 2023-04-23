@@ -51,15 +51,9 @@ def createAirport(request):
 @api_view(['GET'])
 def readAirport(request, pk):
     try:
-        airport = Airport.objects.get(id=pk)
-        flights = Flight.objects.all()
-        departure_flights = []
-        arrival_flights = []
-        for item in flights:
-            if item.departure_airport.id == airport.id:
-                departure_flights.append(item)
-            if item.arrival_airport.id == airport.id:
-                arrival_flights.append(item)
+        airport = Airport.objects.prefetch_related('departures', 'arrivals').get(id=pk)
+        departure_flights = airport.departures.all()
+        arrival_flights = airport.arrivals.all()
         departure_flights_serializer = FlightSerializer(departure_flights, many=True)
         arrival_flights_serializer = FlightSerializer(arrival_flights, many=True)
 
@@ -95,4 +89,3 @@ def filter_airport(request, pk):
     paginated_list_of_airports = paginator.paginate_queryset(list_of_airports, request)
     serializer = AirportSerializer(paginated_list_of_airports, many=True)
     return paginator.get_paginated_response(serializer.data)
-
