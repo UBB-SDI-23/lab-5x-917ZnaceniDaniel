@@ -24,3 +24,7 @@ class Aircraft(models.Model):
     length = models.IntegerField()
     no_engines = models.IntegerField()
     airline_name = models.ForeignKey(Airline, on_delete=models.CASCADE, default=None)
+
+    class Meta:
+        ordering = ['id']
+        indexes = [models.Index(fields=["airline_name"])]

@@ -24,3 +24,7 @@ class Flight(models.Model):
             raise ValidationError('Flight departure time must be earlier than the arrival time.')
     # tickets = models.ManyToManyField(Ticket, related_name='flights')
 
+    class Meta:
+        ordering = ['id']
+        indexes = [models.Index(fields=["departure_airport", "arrival_airport"])]
+

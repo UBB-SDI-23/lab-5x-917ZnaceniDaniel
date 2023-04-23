@@ -1,4 +1,3 @@
-
 # Create your models here.
 from django.db import models
 from django.db.models import Avg, Count, Sum
@@ -20,3 +19,6 @@ class OperatingFlights(models.Model):
                 name='unique_flight_aircraft'
             )
         ]
+
+        ordering = ['id']
+        indexes = [models.Index(fields=["flight", "aircraft"])]

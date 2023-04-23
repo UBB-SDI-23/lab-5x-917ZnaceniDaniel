@@ -1,4 +1,3 @@
-
 # Create your models here.
 from django.db import models
 from django.db.models import Avg, Count, Sum
@@ -21,3 +20,6 @@ class Ticket(models.Model):
                 name='unique_flight_passenger'
             )
         ]
+
+        ordering = ['id']
+        indexes = [models.Index(fields=["flight", "passenger"])]
