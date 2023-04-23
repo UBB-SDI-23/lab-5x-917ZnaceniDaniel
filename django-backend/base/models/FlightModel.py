@@ -4,6 +4,7 @@ from django.db import models
 from django.db.models import Avg, Count, Sum
 from rest_framework.exceptions import ValidationError
 
+from base.models.AircraftModel import Aircraft
 from base.models.AirportModel import Airport
 
 
@@ -16,6 +17,7 @@ class Flight(models.Model):
     status = models.CharField(max_length=255)
     price = models.FloatField()
     seats_available = models.IntegerField()
+    operating_aircraft = models.ForeignKey(Aircraft, on_delete=models.CASCADE, related_name='aircraft', default=None)
 
     def clean(self):
         if self.duration.total_seconds() <= 0:
@@ -26,5 +28,5 @@ class Flight(models.Model):
 
     class Meta:
         ordering = ['id']
-        indexes = [models.Index(fields=["departure_airport", "arrival_airport"])]
+        indexes = [models.Index(fields=["departure_airport", "arrival_airport", "operating_aircraft"])]
 

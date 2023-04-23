@@ -16,8 +16,8 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { AirlineRevenue } from "../models/AirlineRevenue";
-import { BACKEND_API_URL } from "../constants";
+import { AirlineRevenue } from "../../models/AirlineRevenue";
+import { BACKEND_API_URL } from "../../constants";
 
 export const AirlineRevenueStatistics = () => {
   const [loading, setLoading] = useState(true);

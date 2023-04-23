@@ -13,8 +13,8 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import axios from "axios";
 
-import { Airport } from "../models/Airport";
-import { BACKEND_API_URL } from "../constants";
+import { Airport } from "../../models/Airport";
+import { BACKEND_API_URL } from "../../constants";
 
 export const AirportUpdate = () => {
   const navigate = useNavigate();

@@ -3,8 +3,8 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import axios from "axios";
-import { Airport } from "../models/Airport";
-import { BACKEND_API_URL } from "../constants";
+import { Airport } from "../../models/Airport";
+import { BACKEND_API_URL } from "../../constants";
 
 export const AirportCreate = () => {
     const navigate = useNavigate();

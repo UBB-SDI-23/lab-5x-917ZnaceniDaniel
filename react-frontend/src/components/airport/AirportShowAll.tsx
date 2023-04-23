@@ -14,13 +14,13 @@ import {
 } from "@mui/material";
 
 import { useEffect, useState } from "react";
-import { Airport } from "../models/Airport";
+import { Airport } from "../../models/Airport";
 import ReadMoreIcon from "@mui/icons-material/ReadMore";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import AddIcon from "@mui/icons-material/Add";
 import { Link } from "react-router-dom";
-import { BACKEND_API_URL } from "../constants";
+import { BACKEND_API_URL } from "../../constants";
 
 
 

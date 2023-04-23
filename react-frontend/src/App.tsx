@@ -4,14 +4,14 @@ import viteLogo from "/vite.svg";
 import "./App.css";
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { AirportShowAll } from "./components/AirportShowAll";
+import { AirportShowAll } from "./components/airport/AirportShowAll";
 import { AppMenu } from "./components/AppMenu";
 import { AppHome } from "./components/AppHome";
-import { AirportCreate } from "./components/AirportCreate";
-import { AirportDelete } from "./components/AirportDelete";
-import { AirportUpdate } from "./components/AirportUpdate";
-import { AirlineRevenueStatistics } from "./components/AirlineRevenueStatistics";
-import { AirportDetail } from "./components/AirportDetail";
+import { AirportCreate } from "./components/airport/AirportCreate";
+import { AirportDelete } from "./components/airport/AirportDelete";
+import { AirportUpdate } from "./components/airport/AirportUpdate";
+import { AirlineRevenueStatistics } from "./components/statistics/AirlineRevenueStatistics";
+import { AirportDetail } from "./components/airport/AirportDetail";
 function App() {
   const [count, setCount] = useState(0);
 

@@ -53,12 +53,12 @@ urlpatterns = [
     path('delete-ticket/<str:pk>/', deleteTicket, name="ticket-delete"),
     path('read-ticket/<str:pk>/', readTicket, name="ticket-read"),
 
-    path('operating-flights/', OperatingFlightsHomePageView, name="operating-flights-home-page"),
-    path('list-operating-flights/', OperatingFlightsList, name="operating-flights-list"),
-    path('create-operating-flights/', createOperatingFlights, name="operating-flights-create"),
-    path('update-operating-flights/<str:pk>/', updateOperatingFlights, name="operating-flights-update"),
-    path('delete-operating-flights/<str:pk>/', deleteOperatingFlights, name="operating-flights-delete"),
-    path('read-operating-flights/<str:pk>/', readOperatingFlights, name="operating-flights-read"),
+    # path('operating-flights/', OperatingFlightsHomePageView, name="operating-flights-home-page"),
+    # path('list-operating-flights/', OperatingFlightsList, name="operating-flights-list"),
+    # path('create-operating-flights/', createOperatingFlights, name="operating-flights-create"),
+    # path('update-operating-flights/<str:pk>/', updateOperatingFlights, name="operating-flights-update"),
+    # path('delete-operating-flights/<str:pk>/', deleteOperatingFlights, name="operating-flights-delete"),
+    # path('read-operating-flights/<str:pk>/', readOperatingFlights, name="operating-flights-read"),
 
     path('airline-stats/', airline_revenue_report_view, name="airline-stats"),
     path('flights_passengers_report/', flights_passengers_report, name="flights_passengers_report"),
