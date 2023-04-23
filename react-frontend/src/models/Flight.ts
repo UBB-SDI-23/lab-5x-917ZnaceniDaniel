@@ -4,6 +4,7 @@ export interface Flight{
     id:number;
     departure_airport:Airport;
     arrival_airport:Airport;
+    call_sign:string;
     departure_time :Date;
     arrival_time :Date;
     duration : number;

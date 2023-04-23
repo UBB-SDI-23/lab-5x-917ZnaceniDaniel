@@ -28,10 +28,25 @@ total_records = batch_size * num_batches
 
 # get a list of airport ids up to 1000000
 cur.execute('SELECT id FROM base_airport;')
-airport_ids = [row[0] for row in cur.fetchall()]
+# airport_ids = [row[0] for row in cur.fetchall()]
 
 # set the timezone to use
 tz = pytz.timezone('Europe/London')
+
+# list of ICAO prefixes
+prefixes = ["AF", "BAW", "DAL", "EZY", "RYR", "SWA", "UAL"]
+
+# list of airline codes
+airlines = ["AA", "DL", "UA", "WN", "AS", "B6", "NK", "G4"]
+
+
+def generate_call_sign():
+    prefix = random.choice(prefixes)
+    airline = random.choice(airlines)
+    flight_number = random.randint(1, 9999)
+    call_sign = f"{prefix}{airline}{flight_number:04d}"
+    return call_sign
+
 
 for i in range(num_batches):
     print(f'Generating batch {i + 1}/{num_batches}')
@@ -39,10 +54,12 @@ for i in range(num_batches):
     values = []
     for j in range(batch_size):
         # generate fake data for flight fields
-        departure_airport_id = random.choice(airport_ids)
-        arrival_airport_id = random.choice(airport_ids)
+        departure_airport_id = fake.random_int(min=1, max=1000000)
+        arrival_airport_id = fake.random_int(min=1, max=1000000)
         while arrival_airport_id == departure_airport_id:
-            arrival_airport_id = random.choice(airport_ids)
+            arrival_airport_id = fake.random_int(min=1, max=1000000)
+        call_sign = f"{generate_call_sign()}{i%100}"
+        operating_aircraft_id = fake.random_int(min=1, max=1000000)
         departure_time = fake.date_time_between(start_date='+1d', end_date='+2y', tzinfo=tz)
         arrival_time = fake.date_time_between(start_date=departure_time + timedelta(hours=1),
                                               end_date=departure_time + timedelta(hours=24), tzinfo=tz)
@@ -54,7 +71,7 @@ for i in range(num_batches):
 
         # escape any special characters or quotes in the data
         values.append(
-            sql.SQL("({}, {}, {}, {}, {}, {}, {}, {})").format(
+            sql.SQL("({}, {}, {}, {}, {}, {}, {}, {}, {}, {})").format(
                 sql.Literal(departure_airport_id),
                 sql.Literal(arrival_airport_id),
                 sql.Literal(departure_time),
@@ -63,12 +80,14 @@ for i in range(num_batches):
                 sql.Literal(status),
                 sql.Literal(price),
                 sql.Literal(seats_available),
+                sql.Literal(call_sign),
+                sql.Literal(operating_aircraft_id)
             )
         )
 
     # join the values and generate the SQL statement
     sql_statement = sql.SQL(
-        "INSERT INTO base_flight (departure_airport_id, arrival_airport_id, departure_time, arrival_time, duration, status, price, seats_available) VALUES {}").format(
+        "INSERT INTO base_flight (departure_airport_id, arrival_airport_id, departure_time, arrival_time, duration, status, price, seats_available, call_sign,operating_aircraft_id) VALUES {}").format(
         sql.SQL(", ").join(values)
     )
 

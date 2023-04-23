@@ -8,7 +8,7 @@ fake = Faker()
 
 # connect to the database
 conn = psycopg2.connect(
-    host="ec2-13-50-17-123.eu-north-1.compute.amazonaws.com",
+    host="ec2-13-53-137-56.eu-north-1.compute.amazonaws.com",
     port="5432",
     database="airport_management",
     user="db_user",

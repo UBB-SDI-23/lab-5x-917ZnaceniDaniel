@@ -43,13 +43,13 @@ export const AirportDetail = () => {
                 <p style={{textAlign:"left"}}>Arrival Flights:</p>
                 <ul>
                     {airport?.arrival_flights?.map((arrival_flight) => (
-                        <li style={{textAlign:"left"}} key={arrival_flight.id}> flights arriving at: {arrival_flight.arrival_time.toLocaleString()}</li>
+                        <li style={{textAlign:"left"}} key={arrival_flight.id}> flight {arrival_flight.call_sign} arriving at: {arrival_flight.arrival_time.toLocaleString()}</li>
                     ))}
                 </ul>
                 <p style={{textAlign:"left"}}>Departure FLights:</p>
                 <ul>
                     {airport?.departure_flights?.map((departure_flight) => (
-                        <li style={{textAlign:"left"}} key={departure_flight.id}>flight arriving at: {departure_flight.departure_time.toLocaleString()}</li>
+                        <li style={{textAlign:"left"}} key={departure_flight.id}>flight {departure_flight.call_sign} departing at: {departure_flight.departure_time.toLocaleString()}</li>
                     ))}
                 </ul>
             </CardContent>
