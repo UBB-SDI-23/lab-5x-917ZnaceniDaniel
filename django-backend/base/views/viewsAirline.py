@@ -47,7 +47,7 @@ def createAirline(request):
 def readAirline(request, pk):
     try:
         airline = Airline.objects.prefetch_related('airlines').get(id=pk)
-        aircraft_list = airline.aircraft_set.all()
+        aircraft_list = airline.airlines.all()
         aircraft_list_serializer = AircraftSerializer(aircraft_list,many=True)
         serializer = AirlineSerializer(airline, many=False)
         airline_data = serializer.data

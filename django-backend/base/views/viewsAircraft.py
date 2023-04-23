@@ -52,7 +52,7 @@ def readAircraft(request, pk):
         serializer = AircraftSerializer(aircraft, many=False)
         aircraft_data = serializer.data
         aircraft_data['operated_flights'] = flight_list_serializer.data
-        return Response(serializer.data)
+        return Response(aircraft_data)
     except Aircraft.DoesNotExist:
         return Response({"error": "Aircraft not found."}, status=status.HTTP_404_NOT_FOUND)
 
