@@ -6,7 +6,7 @@ from django.utils import timezone
 fake = Faker()
 
 conn = psycopg2.connect(
-    host="ec2-13-53-217-49.eu-north-1.compute.amazonaws.com",
+    host="ec2-13-50-17-123.eu-north-1.compute.amazonaws.com",
     port="5432",
     database="airport_management",
     user="db_user",

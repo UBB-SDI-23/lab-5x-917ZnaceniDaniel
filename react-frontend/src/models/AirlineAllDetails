@@ -8,4 +8,5 @@ export interface Airline{
     established_date:Date;
     revenue :number;
     num_employees: number;
+    aircrafts: Aircraft[];
 }

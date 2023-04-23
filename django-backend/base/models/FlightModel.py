@@ -11,6 +11,7 @@ from base.models.AirportModel import Airport
 class Flight(models.Model):
     departure_airport = models.ForeignKey(Airport, on_delete=models.CASCADE, related_name='departures', default=None)
     arrival_airport = models.ForeignKey(Airport, on_delete=models.CASCADE, related_name='arrivals', default=None)
+    call_sign = models.CharField(max_length=20, null=True)
     departure_time = models.DateTimeField()
     arrival_time = models.DateTimeField()
     duration = models.DurationField()

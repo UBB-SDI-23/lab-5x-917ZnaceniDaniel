@@ -5,7 +5,7 @@ from psycopg2 import sql
 fake = Faker()
 
 conn = psycopg2.connect(
-    host="ec2-13-53-217-49.eu-north-1.compute.amazonaws.com",
+    host="ec2-13-50-17-123.eu-north-1.compute.amazonaws.com",
     port="5432",
     database="airport_management",
     user="db_user",
@@ -18,7 +18,7 @@ cur.execute('TRUNCATE TABLE base_airport RESTART IDENTITY CASCADE;')
 
 # generate new records to insert
 batch_size = 1000
-num_batches = 100
+num_batches = 1000
 total_records = batch_size * num_batches
 
 for i in range(num_batches):
