@@ -9,6 +9,7 @@ from django.db.models import Count, Avg
 
 # ------------------------------------------------------------------------------------------PASSENGER
 from base.serializers.PassengerSerializer import PassengerSerializer
+from base.serializers.TicketSerializer import TicketSerializer
 from base.views.pagination import CustomPagination
 
 
@@ -45,9 +46,13 @@ def createPassenger(request):
 @api_view(['GET'])
 def readPassenger(request, pk):
     try:
-        passenger = Passenger.objects.get(id=pk)
+        passenger = Passenger.objects.prefetch_related('ticket_passenger').get(id=pk)
+        ticket_list = passenger.ticket_passenger.all()
+        ticket_list_serializer = TicketSerializer(ticket_list, many=True)
         serializer = PassengerSerializer(passenger, many=False)
-        return Response(serializer.data)
+        passenger_data = serializer.data
+        passenger_data['tickets'] = ticket_list_serializer.data
+        return Response(passenger_data)
     except Passenger.DoesNotExist:
         return Response({"error": "Aircraft not found."}, status=status.HTTP_404_NOT_FOUND)
 

@@ -8,8 +8,8 @@ from base.models.PassengerModel import Passenger
 
 
 class Ticket(models.Model):
-    flight = models.ForeignKey(Flight, on_delete=models.CASCADE, default=None)
-    passenger = models.ForeignKey(Passenger, on_delete=models.CASCADE, default=None)
+    flight = models.ForeignKey(Flight, related_name='ticket_flight', on_delete=models.CASCADE, default=None)
+    passenger = models.ForeignKey(Passenger, related_name='ticket_passenger', on_delete=models.CASCADE, default=None)
     seat_number = models.CharField(max_length=10)
     booking_date = models.DateField()
 
