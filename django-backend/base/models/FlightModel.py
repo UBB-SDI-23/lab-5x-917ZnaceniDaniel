@@ -17,7 +17,7 @@ class Flight(models.Model):
     status = models.CharField(max_length=255)
     price = models.FloatField()
     seats_available = models.IntegerField()
-    operating_aircraft = models.ForeignKey(Aircraft, on_delete=models.CASCADE, related_name='aircraft', default=None)
+    operating_aircraft = models.ForeignKey(Aircraft, on_delete=models.CASCADE, related_name='aircraft', null=True)
 
     def clean(self):
         if self.duration.total_seconds() <= 0:
