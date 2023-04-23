@@ -9,6 +9,7 @@ from django.db.models import Count, Avg
 
 # ------------------------------------------------------------------------------------------PASSENGER
 from base.serializers.PassengerSerializer import PassengerSerializer
+from base.views.pagination import CustomPagination
 
 
 @api_view(['GET'])  # to only allow a get response
@@ -26,8 +27,11 @@ def passengerHomePageView(request):
 # query the database, serialize the data and return it as a response
 @api_view(['GET'])
 def passengerList(request):
-    list_of_passengers = Passenger.objects.all().values('id')
-    return Response(list_of_passengers)
+    paginator = CustomPagination()
+    list_of_passengers = Passenger.objects.all()
+    paginated_list_of_passengers = paginator.paginate_queryset(list_of_passengers, request)
+    serializer = PassengerSerializer(paginated_list_of_passengers, many=True)
+    return paginator.get_paginated_response(serializer.data)
 
 
 @api_view(['POST'])

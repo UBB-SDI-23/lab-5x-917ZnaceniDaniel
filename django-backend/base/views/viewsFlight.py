@@ -9,6 +9,7 @@ from django.db.models import Count, Avg
 
 # -------------------------------------------------------------------------------------------FLIGHT
 from base.serializers.FlightSerializer import FlightSerializer
+from base.views.pagination import CustomPagination
 
 
 @api_view(['GET'])  # to only allow a get response
@@ -26,8 +27,11 @@ def flightHomePageView(request):
 # query the database, serialize the data and return it as a response
 @api_view(['GET'])
 def flightList(request):
-    list_of_flights = Flight.objects.all().values('id')
-    return Response(list_of_flights)
+    paginator = CustomPagination()
+    list_of_flights = Flight.objects.all()
+    paginated_list_of_flights = paginator.paginate_queryset(list_of_flights, request)
+    serializer = FlightSerializer(paginated_list_of_flights, many=True)
+    return paginator.get_paginated_response(serializer.data)
 
 
 @api_view(['POST'])

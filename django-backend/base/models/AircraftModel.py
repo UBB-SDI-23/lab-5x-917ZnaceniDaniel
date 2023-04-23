@@ -1,5 +1,3 @@
-
-
 # Create your models here.
 from django.db import models
 from django.db.models import Avg, Count, Sum
@@ -23,7 +21,7 @@ class Aircraft(models.Model):
     wing_span = models.IntegerField()
     length = models.IntegerField()
     no_engines = models.IntegerField()
-    airline_name = models.ForeignKey(Airline, on_delete=models.CASCADE, default=None)
+    airline_name = models.ForeignKey(Airline, related_name='airlines', on_delete=models.CASCADE, default=None)
 
     class Meta:
         ordering = ['id']

@@ -9,6 +9,7 @@ from django.db.models import Count, Avg
 
 # --------------------------------------------------------------------------------------------------------TICKET
 from base.serializers.TicketSerializer import TicketSerializer
+from base.views.pagination import CustomPagination
 
 
 @api_view(['GET'])  # to only allow a get response
@@ -26,8 +27,11 @@ def ticketHomePageView(request):
 # query the database, serialize the data and return it as a response
 @api_view(['GET'])
 def ticketList(request):
-    list_of_tickets = Ticket.objects.all().values('id')
-    return Response(list_of_tickets)
+    paginator = CustomPagination()
+    list_of_tickets = Ticket.objects.all()
+    paginated_list_of_tickets = paginator.paginate_queryset(list_of_tickets, request)
+    serializer = TicketSerializer(paginated_list_of_tickets, many=True)
+    return paginator.get_paginated_response(serializer.data)
 
 
 @api_view(['POST'])

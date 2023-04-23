@@ -8,7 +8,9 @@ from django.db.models import Count, Avg
 
 
 # ----------------------------------------------------------------------------------------AIRLINE
+from base.serializers.AircraftSerializer import AircraftSerializer
 from base.serializers.AirlineSerializer import AirlineSerializer
+from base.views.pagination import CustomPagination
 
 
 @api_view(['GET'])  # to only allow a get response
@@ -26,9 +28,11 @@ def airlineHomePageView(request):
 # query the database, serialize the data and return it as a response
 @api_view(['GET'])  # to only allow a get response
 def airlineList(request):
-    list_of_airlines = Airline.objects.all().values('id')[:100]
-    # serializer = AirlineSerializer(list_of_airlines, many=True)
-    return Response(list_of_airlines)
+    paginator = CustomPagination()
+    list_of_airlines = Airline.objects.all()
+    paginated_list_of_airlines = paginator.paginate_queryset(list_of_airlines, request)
+    serializer = AirlineSerializer(paginated_list_of_airlines, many=True)
+    return paginator.get_paginated_response(serializer.data)
 
 
 @api_view(['POST'])
@@ -42,9 +46,13 @@ def createAirline(request):
 @api_view(['GET'])
 def readAirline(request, pk):
     try:
-        airline = Airline.objects.get(id=pk)
+        airline = Airline.objects.prefetch_related('airlines').get(id=pk)
+        aircraft_list = airline.aircraft_set.all()
+        aircraft_list_serializer = AircraftSerializer(aircraft_list,many=True)
         serializer = AirlineSerializer(airline, many=False)
-        return Response(serializer.data)
+        airline_data = serializer.data
+        airline_data['aircraft_list'] = aircraft_list_serializer.data
+        return Response(airline_data)
     except Airline.DoesNotExist:
         return Response({"error": "Airline not found."}, status=status.HTTP_404_NOT_FOUND)
 
