@@ -36,14 +36,22 @@ def airportHomePageView(request):
 def airportList(request):
     paginator = CustomPagination()
     list_of_airports = Airport.objects.all()
-    paginated_list_of_airports = paginator.paginate_queryset(list_of_airports, request)
-    serializer = AirportSerializer(paginated_list_of_airports, many=True)
-    airport_data = serializer.data
-    # print(airport_data)
-    airport_id = airport_data[0]['id']
-    no_departing = Flight.objects.filter(departure_airport_id=airport_id).count()
-    airport_data[0]['no_departing'] = no_departing
-    return paginator.get_paginated_response(airport_data)
+    airport_data = []
+    for airport in list_of_airports:
+        no_departing = Flight.objects.filter(departure_airport=airport).count()
+        serialized_airport = AirportSerializer(airport, many=False)
+        data = serialized_airport.data
+        data['no_departing'] = no_departing
+        # data = {
+        #     'id': airport.id,
+        #     'name': airport.name,
+        #     'no_departing': no_departing,
+        #     # Add any other airport fields you want to include in the response
+        # }
+        airport_data.append(data)
+    paginated_airport_data = paginator.paginate_queryset(airport_data, request)
+    serializer = AirportSerializer(paginated_airport_data, many=True)
+    return paginator.get_paginated_response(serializer.data)
 
 
 @api_view(['POST'])
