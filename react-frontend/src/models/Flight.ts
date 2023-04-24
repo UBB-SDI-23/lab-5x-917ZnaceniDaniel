@@ -1,3 +1,4 @@
+import { Aircraft } from "./Aircraft";
 import { Airport } from "./Airport";
 
 export interface Flight{
@@ -11,4 +12,5 @@ export interface Flight{
     status :string;
     price :number
     seats_available :number;
+    operating_aircraft:Aircraft;
 }

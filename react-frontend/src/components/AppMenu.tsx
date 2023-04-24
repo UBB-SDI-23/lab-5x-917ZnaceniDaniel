@@ -57,6 +57,16 @@ export const AppMenu = () => {
 					</Button>
 
 					<Button
+						variant={path.startsWith("/list-flight") ? "outlined" : "text"}
+						to="/list-flight"
+						component={Link}
+						color="inherit"
+						sx={{ mr: 5 }}
+						startIcon={<ConnectingAirportsIcon />}>
+						Flights
+					</Button>
+
+					<Button
 						variant={path.startsWith("/airline-stats") ? "outlined" : "text"}
 						to="/airline-stats"
 						component={Link}

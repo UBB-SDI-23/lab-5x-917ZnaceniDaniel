@@ -89,3 +89,12 @@ def filter_airport(request, pk):
     paginated_list_of_airports = paginator.paginate_queryset(list_of_airports, request)
     serializer = AirportSerializer(paginated_list_of_airports, many=True)
     return paginator.get_paginated_response(serializer.data)
+
+
+@api_view(['GET'])
+def airportOrderedName(request, name_filter):
+    paginator = CustomPagination()
+    list_of_airlines = Airport.objects.filter(name__icontains=name_filter)
+    paginated_list_of_airlines = paginator.paginate_queryset(list_of_airlines, request)
+    serializer = AirportSerializer(paginated_list_of_airlines, many=True)
+    return paginator.get_paginated_response(serializer.data)

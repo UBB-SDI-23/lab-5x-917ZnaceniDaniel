@@ -6,7 +6,6 @@ from base.models.AircraftModel import Aircraft
 from base.serializers import *
 from django.db.models import Count, Avg
 
-
 # -----------------------------------------------------------------------------------------------AIRCRAFT
 from base.serializers.AircraftSerializer import AircraftSerializer
 from base.serializers.FlightSerializer import FlightSerializer
@@ -71,3 +70,12 @@ def deleteAircraft(request, pk):
     aircraft = Aircraft.objects.get(id=pk)
     aircraft.delete()
     return Response("Aircraft successfully deleted!")
+
+
+@api_view(['GET'])
+def aircraftOrderedName(request, name_filter):
+    paginator = CustomPagination()
+    list_of_airlines = Aircraft.objects.filter(name__icontains=name_filter)
+    paginated_list_of_airlines = paginator.paginate_queryset(list_of_airlines, request)
+    serializer = AircraftSerializer(paginated_list_of_airlines, many=True)
+    return paginator.get_paginated_response(serializer.data)
