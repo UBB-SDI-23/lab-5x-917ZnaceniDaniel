@@ -29,8 +29,8 @@ export const FlightDetail = () => {
                     <ArrowBackIcon />
                 </IconButton>{" "}
                 <h1 style={{textAlign:"center"}}> Flight Details</h1>
-                <p style={{textAlign:"left"}}>Departure airport: {flight?.departure_airport.toLocaleString()}</p>
-                <p style={{textAlign:"left"}}>Arrival airport: {flight?.arrival_airport.toLocaleString()}</p>
+                <p style={{textAlign:"left"}}>Departure airport: {flight?.departure_airport.name}</p>
+                <p style={{textAlign:"left"}}>Arrival airport: {flight?.arrival_airport.name}</p>
                 <p style={{textAlign:"left"}}>call sign: {flight?.call_sign}</p>
                 <p style={{textAlign:"left"}}>Departure Time: {flight?.departure_time.toLocaleString()}</p>
                 <p style={{textAlign:"left"}}>Arrival time: {flight?.arrival_time.toLocaleString()}</p>
@@ -38,7 +38,7 @@ export const FlightDetail = () => {
                 <p style={{textAlign:"left"}}>Status: {flight?.status}</p>
                 <p style={{textAlign:"left"}}>Price: {flight?.price}</p>
                 <p style={{textAlign:"left"}}>Available Seats: {flight?.seats_available}</p>
-                <p style={{textAlign:"left"}}>Operating Aircraft: {flight?.operating_aircraft.toLocaleString()}</p>
+                <p style={{textAlign:"left"}}>Operating Aircraft: {flight?.operating_aircraft.name}</p>
                 <p style={{textAlign:"left"}}>Tickets:</p>
                 <ul>
                     {flight?.tickets?.map((tickets) => (
