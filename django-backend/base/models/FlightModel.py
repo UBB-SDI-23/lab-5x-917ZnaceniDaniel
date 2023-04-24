@@ -1,4 +1,3 @@
-
 # Create your models here.
 from django.db import models
 from django.db.models import Avg, Count, Sum
@@ -25,9 +24,10 @@ class Flight(models.Model):
             raise ValidationError('Flight duration must be greater than 0.')
         if self.departure_time >= self.arrival_time:
             raise ValidationError('Flight departure time must be earlier than the arrival time.')
+
     # tickets = models.ManyToManyField(Ticket, related_name='flights')
 
     class Meta:
         ordering = ['id']
-        indexes = [models.Index(fields=["departure_airport", "arrival_airport", "operating_aircraft"])]
-
+        indexes = [models.Index(fields=["departure_airport", "id"]),
+                   models.Index(fields=["departure_airport", "arrival_airport", "operating_aircraft"])]
