@@ -9,40 +9,47 @@ from base.models.AirlineModel import Airline
 from base.models.DTOModels import AirlineRevenueDTO, FlightPassengersDTO
 from base.models.FlightModel import Flight
 from base.serializers import *
-from django.db.models import Count, Avg
-
+from django.db.models import Count, Avg, Sum
 
 # ----------------------------------------------------------------------------------------statistical report
 # get the top 3 airlines with the most revenue per aircraft
 from base.serializers.AircraftSerializer import AircraftSerializer
 
 
-def get_airline_revenue_report():
-    aircrafts = Aircraft.objects.all()
-    airlines_revenue = {}
-    for aircraft in aircrafts:
-        airline_name = aircraft.airline_name.name
-        if airline_name in airlines_revenue:
-            airlines_revenue[airline_name] += aircraft.airline_name.revenue
-        else:
-            airlines_revenue[airline_name] = aircraft.airline_name.revenue
-    sorted_airlines = sorted(airlines_revenue.items(), key=lambda x: x[1], reverse=True)
-    airline_revenue_dto_list = []
-    i = 0
-    for airline_name, revenue in sorted_airlines:
-        airline_revenue_dto_list.append(AirlineRevenueDTO(airline_name=airline_name, revenue=revenue))
-        i = i + 1
-        if i == 3:
-            break
-    return airline_revenue_dto_list
-
-
+# def get_airline_revenue_report():
+#     aircrafts = Aircraft.objects.all()
+#     airlines_revenue = {}
+#     for aircraft in aircrafts:
+#         airline_name = aircraft.airline_name.name
+#         if airline_name in airlines_revenue:
+#             airlines_revenue[airline_name] += aircraft.airline_name.revenue
+#         else:
+#             airlines_revenue[airline_name] = aircraft.airline_name.revenue
+#     sorted_airlines = sorted(airlines_revenue.items(), key=lambda x: x[1], reverse=True)
+#     airline_revenue_dto_list = []
+#     i = 0
+#     for airline_name, revenue in sorted_airlines:
+#         airline_revenue_dto_list.append(AirlineRevenueDTO(airline_name=airline_name, revenue=revenue))
+#         i = i + 1
+#         if i == 3:
+#             break
+#     return airline_revenue_dto_list
+#
+#
 # def airline_revenue_report_view(request):
 #     airline_dtos = get_airline_revenue_report()
-#     # serializer = AirlineRevenueDTOSerializer(airline_dtos, many=True)
-#     # return Response(serializer.data)
-#     data = [{'airline_name': dto.airline_name, 'revenue': dto.revenue} for dto in airline_dtos]
-#     return JsonResponse(data)
+#     data = [{"airline_name": dto.airline_name, "revenue": dto.revenue} for dto in airline_dtos]
+#     return JsonResponse(data, safe=False)
+
+
+def get_airline_revenue_report():
+    aircrafts = Aircraft.objects.select_related('airline_name').values('airline_name__name').annotate(
+        revenue=Sum('airline_name__revenue')).order_by('-revenue')[:3]
+    airline_revenue_dto_list = [
+        AirlineRevenueDTO(airline_name=aircraft['airline_name__name'], revenue=aircraft['revenue']) for aircraft in
+        aircrafts]
+    return airline_revenue_dto_list
+
 
 def airline_revenue_report_view(request):
     airline_dtos = get_airline_revenue_report()
