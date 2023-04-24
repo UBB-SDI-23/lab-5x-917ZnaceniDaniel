@@ -11,3 +11,4 @@ class Passenger(models.Model):
     email = models.EmailField()
     phone_number = models.CharField(max_length=20)
     citizenship = models.CharField(max_length=100, default=None)
+    description = models.CharField(max_length=100, null=True)
