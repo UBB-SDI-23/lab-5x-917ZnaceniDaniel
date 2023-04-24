@@ -8,18 +8,18 @@ import { FlightAllDetails } from "../../models/FlightAllDetails";
 import { BACKEND_API_URL } from "../../constants";
 
 export const FlightDetail = () => {
-    const { flighId} = useParams();
+    const { flightId } = useParams();
     const [flight, setFlight] = useState<FlightAllDetails>();
 
     useEffect(() => {
         const fetchFlight =async () => {
-            const response = await fetch(`${BACKEND_API_URL}/read-flight/${flighId}/`);
+            const response = await fetch(`${BACKEND_API_URL}/read-flight/${flightId}/`);
             const flight = await response.json();
             setFlight(flight);
             console.log(flight);
         };
         fetchFlight();
-    }, [flighId]);
+    }, [flightId]);
 
     return (
         <Container>
@@ -47,11 +47,11 @@ export const FlightDetail = () => {
                 </ul>
             </CardContent>
             <CardActions>
-                <IconButton component={Link} sx={{ mr: 3 }} to={`/update-flight/${flighId}`}>
+                <IconButton component={Link} sx={{ mr: 3 }} to={`/update-flight/${flightId}`}>
                     <EditIcon />
                 </IconButton>
 
-                <IconButton component={Link} sx={{ mr: 3 }} to={`/delete-flight/${flighId}`}>
+                <IconButton component={Link} sx={{ mr: 3 }} to={`/delete-flight/${flightId}`}>
                     <DeleteForeverIcon sx={{ color: "red" }} />
                 </IconButton>
             </CardActions>
