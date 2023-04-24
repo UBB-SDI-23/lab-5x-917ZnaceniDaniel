@@ -37,18 +37,13 @@ def airportHomePageView(request):
 
 @api_view(['GET'])
 def airportList(request):
+    paginator = CustomPagination()
     airports = Airport.objects.annotate(
         no_departing=Count('departures')
-    ).values(
-        'id', 'name', 'city', 'country', 'timezone', 'elevation', 'capacity',
-        'no_gates', 'no_terminals', 'no_departing'
     )
-
-    page = request.GET.get('page')
-    paginator = Paginator(airports, 10)  # Change 1000 to whatever page size you want
-    paginated_airports = paginator.get_page(page)
-    serializer = AirportSerializer(paginated_airports, many=True)
-    return Response(serializer.data)
+    paginated_list_of_airports = paginator.paginate_queryset(airports, request)
+    serializer = AirportSerializer(paginated_list_of_airports, many=True)
+    return paginator.get_paginated_response(serializer.data)
 
 
 @api_view(['POST'])
