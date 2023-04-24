@@ -1,3 +1,4 @@
+import { Airline } from "./Airline";
 
 export interface Aircraft {
     id:number;
@@ -10,4 +11,5 @@ export interface Aircraft {
     wing_span :number;
     length :number;
     no_engines :number;
+    airline_name: Airline;
 }

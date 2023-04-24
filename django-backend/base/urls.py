@@ -63,5 +63,6 @@ urlpatterns = [
     path('airline-stats/', airline_revenue_report_view, name="airline-stats"),
     path('flights_passengers_report/', flights_passengers_report, name="flights_passengers_report"),
     path('airline/<int:airline_id>/add_aircrafts', add_aircrafts),
+    path('airlineOrderedName/<str:name_filter>/', airlineOrderedName),
 
 ]

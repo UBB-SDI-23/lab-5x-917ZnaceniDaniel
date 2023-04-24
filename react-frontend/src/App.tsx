@@ -17,6 +17,11 @@ import { AirlineCreate } from "./components/airline/AirlineCreate";
 import { AirlineDelete } from "./components/airline/AirlineDelete";
 import { AirlineUpdate } from "./components/airline/AirlineUpdate";
 import { AirlineDetail } from "./components/airline/AirlineDetail";
+import { AircraftDetail } from "./components/aircraft/AircraftDetail";
+import { AircraftUpdate } from "./components/aircraft/AircraftUpdate";
+import { AircraftCreate } from "./components/aircraft/AircraftCreate";
+import { AircraftShowAll } from "./components/aircraft/AircraftShowAll";
+import { AircraftDelete } from "./components/aircraft/AircraftDelete";
 function App() {
   const [count, setCount] = useState(0);
 
@@ -45,6 +50,16 @@ function App() {
           />
           <Route path="update-airline/:airlineId" element={<AirlineUpdate />} />
           <Route path="read-airline/:airlineId" element={<AirlineDetail />} />
+
+
+          <Route path="/list-aircraft/" element={<AircraftShowAll />} />
+          <Route path="/create-aircraft/" element={<AircraftCreate />} />
+          <Route
+            path="/delete-aircraft/:aircraftId"
+            element={<AircraftDelete />}
+          />
+          <Route path="update-aircraft/:aircraftId" element={<AircraftUpdate />} />
+          <Route path="read-aircraft/:aircraftId" element={<AircraftDetail />} />
         </Routes>
       </Router>
     </React.Fragment>

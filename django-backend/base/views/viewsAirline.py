@@ -71,3 +71,12 @@ def deleteAirline(request, pk):
     airline = Airline.objects.get(id=pk)
     airline.delete()
     return Response("Airline successfully deleted!")
+
+
+@api_view(['GET'])
+def airlineOrderedName(request, name_filter):
+    paginator = CustomPagination()
+    list_of_airlines = Airline.objects.filter(name__icontains=name_filter)
+    paginated_list_of_airlines = paginator.paginate_queryset(list_of_airlines, request)
+    serializer = AirlineSerializer(paginated_list_of_airlines, many=True)
+    return paginator.get_paginated_response(serializer.data)
