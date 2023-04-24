@@ -2,11 +2,14 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from base.models import *
+from base.models.AirportModel import Airport
 from base.models.FlightModel import Flight
 from base.serializers import *
 from django.db.models import Count, Avg
 
 # -------------------------------------------------------------------------------------------FLIGHT
+from base.serializers.AircraftSerializer import AircraftSerializer
+from base.serializers.AirportSerializer import AirportSerializer
 from base.serializers.FlightSerializer import FlightSerializer
 from base.serializers.TicketSerializer import TicketSerializer
 from base.views.pagination import CustomPagination
@@ -42,15 +45,41 @@ def createFlight(request):
     return Response(serializer.data)
 
 
+# @api_view(['GET'])
+# def readFlight(request, pk):
+#     try:
+#
+#         flight = Flight.objects.prefetch_related('ticket_flight').get(id=pk)
+#         ticket_list = flight.ticket_flight.all()
+#         ticket_list_serializer = TicketSerializer(ticket_list, many=True)
+#         serializer = FlightSerializer(flight, many=False)
+#         flight_data = serializer.data
+#         flight_data['tickets'] = ticket_list_serializer.data
+#         return Response(flight_data)
+#     except Flight.DoesNotExist:
+#         return Response({"error": "Flight not found."}, status=status.HTTP_404_NOT_FOUND)
+
 @api_view(['GET'])
 def readFlight(request, pk):
     try:
         flight = Flight.objects.prefetch_related('ticket_flight').get(id=pk)
+
+        # Accessing related objects
+        departure_airport = flight.departure_airport
+        arrival_airport = flight.arrival_airport
+        operating_aircraft = flight.operating_aircraft
+
         ticket_list = flight.ticket_flight.all()
         ticket_list_serializer = TicketSerializer(ticket_list, many=True)
         serializer = FlightSerializer(flight, many=False)
         flight_data = serializer.data
         flight_data['tickets'] = ticket_list_serializer.data
+
+        # Adding related objects to the response
+        flight_data['departure_airport'] = AirportSerializer(departure_airport).data
+        flight_data['arrival_airport'] = AirportSerializer(arrival_airport).data
+        flight_data['operating_aircraft'] = AircraftSerializer(operating_aircraft).data
+
         return Response(flight_data)
     except Flight.DoesNotExist:
         return Response({"error": "Flight not found."}, status=status.HTTP_404_NOT_FOUND)

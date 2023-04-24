@@ -3,11 +3,13 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from base.models import *
 from base.models.AircraftModel import Aircraft
+from base.models.AirlineModel import Airline
 from base.serializers import *
 from django.db.models import Count, Avg
 
 # -----------------------------------------------------------------------------------------------AIRCRAFT
 from base.serializers.AircraftSerializer import AircraftSerializer
+from base.serializers.AirlineSerializer import AirlineSerializer
 from base.serializers.FlightSerializer import FlightSerializer
 from base.views.pagination import CustomPagination
 
@@ -46,11 +48,14 @@ def createAircraft(request):
 def readAircraft(request, pk):
     try:
         aircraft = Aircraft.objects.prefetch_related('aircraft').get(id=pk)
+        airline = Airline.objects.get(id=pk)
+        serialized_airline = AirlineSerializer(airline, many=False)
         flight_list = aircraft.aircraft.all()
         flight_list_serializer = FlightSerializer(flight_list, many=True)
         serializer = AircraftSerializer(aircraft, many=False)
         aircraft_data = serializer.data
         aircraft_data['operated_flights'] = flight_list_serializer.data
+        aircraft_data['airline_name'] = serialized_airline.data
         return Response(aircraft_data)
     except Aircraft.DoesNotExist:
         return Response({"error": "Aircraft not found."}, status=status.HTTP_404_NOT_FOUND)

@@ -38,7 +38,7 @@ export const AircraftDetail = () => {
                 <p style={{textAlign:"left"}}>Wing Span: {aircraft?.wing_span}</p>
                 <p style={{textAlign:"left"}}>Length: {aircraft?.length}</p>
                 <p style={{textAlign:"left"}}>No of Engines: {aircraft?.no_engines}</p>
-                <p style={{textAlign:"left"}}>Airline Name: {aircraft?.airline_name.toLocaleString()}</p>
+                <p style={{textAlign:"left"}}>Airline Name: {aircraft?.airline_name.name}</p>
                 <p style={{textAlign:"left"}}>Opperated Flights:</p>
                 <ul>
                     {aircraft?.operated_flights?.map((operated_flights) => (
