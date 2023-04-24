@@ -6,7 +6,6 @@ from base.models.AirlineModel import Airline
 from base.serializers import *
 from django.db.models import Count, Avg
 
-
 # ----------------------------------------------------------------------------------------AIRLINE
 from base.serializers.AircraftSerializer import AircraftSerializer
 from base.serializers.AirlineSerializer import AirlineSerializer
@@ -29,7 +28,7 @@ def airlineHomePageView(request):
 @api_view(['GET'])  # to only allow a get response
 def airlineList(request):
     paginator = CustomPagination()
-    list_of_airlines = Airline.objects.all()
+    list_of_airlines = Airline.objects.annotate(no_aircrafts=Count('airlines'))
     paginated_list_of_airlines = paginator.paginate_queryset(list_of_airlines, request)
     serializer = AirlineSerializer(paginated_list_of_airlines, many=True)
     return paginator.get_paginated_response(serializer.data)
@@ -48,7 +47,7 @@ def readAirline(request, pk):
     try:
         airline = Airline.objects.prefetch_related('airlines').get(id=pk)
         aircraft_list = airline.airlines.all()
-        aircraft_list_serializer = AircraftSerializer(aircraft_list,many=True)
+        aircraft_list_serializer = AircraftSerializer(aircraft_list, many=True)
         serializer = AirlineSerializer(airline, many=False)
         airline_data = serializer.data
         airline_data['aircraft_list'] = aircraft_list_serializer.data

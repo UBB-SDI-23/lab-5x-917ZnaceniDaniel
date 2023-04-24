@@ -98,6 +98,7 @@ export const AirlineShowAll = () => {
                             <TableCell align="center">Established Date</TableCell>
                             <TableCell align="center">Revenue</TableCell>
                             <TableCell align="center">Employee Count</TableCell>
+                            <TableCell align="center">count Aircrafts</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -113,6 +114,7 @@ export const AirlineShowAll = () => {
                                 <TableCell align="center">{airline.established_date.toLocaleString()}</TableCell>
                                 <TableCell align="center">{airline.revenue}</TableCell>
                                 <TableCell align="center">{airline.num_employees}</TableCell>
+                                <TableCell align="center">{airline.no_aircrafts}</TableCell>
                                 <TableCell align="right">
 										<IconButton
 											component={Link}
