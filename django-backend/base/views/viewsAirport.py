@@ -1,3 +1,4 @@
+from django.db.models import Count
 from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -7,6 +8,7 @@ from base.models.FlightModel import Flight
 from base.serializers.FlightSerializer import FlightSerializer
 from base.serializers.AirportSerializer import AirportSerializer
 from base.views.pagination import CustomPagination
+from django.core.cache import cache
 
 
 @api_view(['GET'])
@@ -35,20 +37,26 @@ def airportHomePageView(request):
 @api_view(['GET'])
 def airportList(request):
     paginator = CustomPagination()
-    list_of_airports = Airport.objects.all()
-    airport_data = []
-    for airport in list_of_airports:
-        no_departing = Flight.objects.filter(departure_airport=airport).count()
-        serialized_airport = AirportSerializer(airport, many=False)
-        data = serialized_airport.data
-        data['no_departing'] = no_departing
-        # data = {
-        #     'id': airport.id,
-        #     'name': airport.name,
-        #     'no_departing': no_departing,
-        #     # Add any other airport fields you want to include in the response
-        # }
-        airport_data.append(data)
+    airports = Airport.objects.prefetch_related('departures').annotate(no_departing=Count('departures')).values()
+    cached_airport_data = cache.get('airport_data')
+    if cached_airport_data is None:
+        airport_data = []
+        for airport in airports:
+            airport_data.append({
+                'id': airport['id'],
+                'name': airport['name'],
+                'city': airport['city'],
+                'country': airport['country'],
+                'timezone': airport['timezone'],
+                'elevation': airport['elevation'],
+                'capacity': airport['capacity'],
+                'no_gates': airport['no_gates'],
+                'no_terminals': airport['no_terminals'],
+                'no_departing': airport['no_departing'],
+            })
+        cache.set('airport_data', airport_data, 3600)
+    else:
+        airport_data = cached_airport_data
     paginated_airport_data = paginator.paginate_queryset(airport_data, request)
     serializer = AirportSerializer(paginated_airport_data, many=True)
     return paginator.get_paginated_response(serializer.data)
