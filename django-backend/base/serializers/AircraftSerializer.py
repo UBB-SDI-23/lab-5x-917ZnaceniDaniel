@@ -3,6 +3,8 @@ from base.models.AircraftModel import Aircraft
 
 
 class AircraftSerializer(serializers.ModelSerializer):
+    no_flights = serializers.IntegerField(read_only=True)
+
     class Meta:
         model = Aircraft
         fields = '__all__'

@@ -30,7 +30,7 @@ def aircraftHomePageView(request):
 @api_view(['GET'])  # to only allow a get response
 def aircraftList(request):
     paginator = CustomPagination()
-    list_of_aircraft = Aircraft.objects.all()
+    list_of_aircraft = Aircraft.objects.annotate(no_flights=Count('aircraft'))
     paginated_list_of_airports = paginator.paginate_queryset(list_of_aircraft, request)
     serializer = AircraftSerializer(paginated_list_of_airports, many=True)
     return paginator.get_paginated_response(serializer.data)

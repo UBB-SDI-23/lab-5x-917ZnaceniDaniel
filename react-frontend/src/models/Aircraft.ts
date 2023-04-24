@@ -12,4 +12,5 @@ export interface Aircraft {
     length :number;
     no_engines :number;
     airline_name: Airline;
+    no_flights: number;
 }

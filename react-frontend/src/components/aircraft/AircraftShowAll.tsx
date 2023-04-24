@@ -97,6 +97,7 @@ export const AircraftShowAll = () => {
                             <TableCell align="center">Wing Span</TableCell>
                             <TableCell align="center">Length</TableCell>
                             <TableCell align="center">No of Engines</TableCell>
+                            <TableCell align="center">Count Flights</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -114,6 +115,7 @@ export const AircraftShowAll = () => {
                                 <TableCell align="center">{aircraft.wing_span}</TableCell>
                                 <TableCell align="center">{aircraft.length}</TableCell>
                                 <TableCell align="center">{aircraft.no_engines}</TableCell>
+                                <TableCell align="center">{aircraft.no_flights}</TableCell>
                                 <TableCell align="right">
 										<IconButton
 											component={Link}
