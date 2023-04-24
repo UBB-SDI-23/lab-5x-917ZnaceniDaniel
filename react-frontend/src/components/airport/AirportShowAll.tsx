@@ -100,6 +100,7 @@ export const AirportShowAll = () => {
                             <TableCell align="center">Capacity</TableCell>
                             <TableCell align="center">noGates</TableCell>
                             <TableCell align="center">noTerminals</TableCell>
+                            <TableCell align="center">countDeparting</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -116,6 +117,7 @@ export const AirportShowAll = () => {
                                 <TableCell align="center">{airport.capacity}</TableCell>
                                 <TableCell align="center">{airport.no_gates}</TableCell>
                                 <TableCell align="center">{airport.no_terminals}</TableCell>
+                                <TableCell align="center">{airport.no_departing}</TableCell>
                                 <TableCell align="right">
 										<IconButton
 											component={Link}

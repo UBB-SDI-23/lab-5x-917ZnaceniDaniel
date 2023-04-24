@@ -8,4 +8,5 @@ export interface Airport{
     capacity :number;
     no_gates:number;
     no_terminals :number;
+    no_departing: number;
 }

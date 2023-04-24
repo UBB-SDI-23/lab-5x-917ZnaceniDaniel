@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -37,7 +38,12 @@ def airportList(request):
     list_of_airports = Airport.objects.all()
     paginated_list_of_airports = paginator.paginate_queryset(list_of_airports, request)
     serializer = AirportSerializer(paginated_list_of_airports, many=True)
-    return paginator.get_paginated_response(serializer.data)
+    airport_data = serializer.data
+    # print(airport_data)
+    airport_id = airport_data[0]['id']
+    no_departing = Flight.objects.filter(departure_airport_id=airport_id).count()
+    airport_data[0]['no_departing'] = no_departing
+    return paginator.get_paginated_response(airport_data)
 
 
 @api_view(['POST'])
