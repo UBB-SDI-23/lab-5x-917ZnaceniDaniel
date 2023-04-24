@@ -28,8 +28,8 @@ export const AirportUpdate = () => {
     timezone: "",
     elevation: 0,
     capacity: 0,
-    noGates: 0,
-    noTerminals: 0,
+    no_gates: 0,
+    no_terminals: 0,
   });
 
   useEffect(() => {
@@ -45,8 +45,8 @@ export const AirportUpdate = () => {
         timezone: airport.timezone,
         elevation: airport.elevation,
         capacity: airport.capacity,
-        noGates: airport.noGates,
-        noTerminals: airport.noTerminals,
+        no_gates: airport.noGates,
+        no_terminals: airport.noTerminals,
       });
       setLoading(false);
       console.log(airport);
@@ -150,7 +150,7 @@ export const AirportUpdate = () => {
               fullWidth
               sx={{ mb: 2 }}
               onChange={(event) =>
-                setAirport({ ...airport, noGates: Number(event.target.value) })
+                setAirport({ ...airport, no_gates: Number(event.target.value) })
               }
             />
             <TextField
@@ -162,7 +162,7 @@ export const AirportUpdate = () => {
               onChange={(event) =>
                 setAirport({
                   ...airport,
-                  noTerminals: Number(event.target.value),
+                  no_terminals: Number(event.target.value),
                 })
               }
             />

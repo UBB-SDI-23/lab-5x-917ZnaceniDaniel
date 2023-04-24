@@ -1,6 +1,6 @@
 import { Aircraft } from "./Aircraft";
 
-export interface Airline{
+export interface AirlineAllDetails{
     id:number;
     name :string;
     headquarters :string;

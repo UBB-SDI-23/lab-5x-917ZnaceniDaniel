@@ -5,10 +5,9 @@ export const AppHome = () => {
 	return (
 		<React.Fragment>
 			<CssBaseline />
-
 			<Container maxWidth="xl">
 				<Typography variant="h1" component="h1" gutterBottom>
-                    Welcome to my app!
+                    Welcome to The Aiport Management App!
 				</Typography>
 			</Container>
 		</React.Fragment>

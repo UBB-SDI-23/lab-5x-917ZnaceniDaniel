@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import LocalAirportIcon from '@mui/icons-material/LocalAirport';
 import FlightLandIcon from '@mui/icons-material/FlightLand';
 import AirlinesIcon from '@mui/icons-material/Airlines';
+import ConnectingAirportsIcon from '@mui/icons-material/ConnectingAirports';
 
 export const AppMenu = () => {
     const location = useLocation();
@@ -33,6 +34,16 @@ export const AppMenu = () => {
 						sx={{ mr: 5 }}
 						startIcon={<LocalAirportIcon />}>
 						Airports
+					</Button>
+
+					<Button
+						variant={path.startsWith("/list-airline") ? "outlined" : "text"}
+						to="/list-airline"
+						component={Link}
+						color="inherit"
+						sx={{ mr: 5 }}
+						startIcon={<ConnectingAirportsIcon />}>
+						Airlines
 					</Button>
 
 					<Button

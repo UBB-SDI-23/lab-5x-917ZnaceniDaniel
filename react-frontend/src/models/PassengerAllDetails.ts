@@ -1,6 +1,6 @@
 import { Ticket } from "./Ticket";
 
-export interface Passenger{
+export interface PassengerAllDetails{
     id: number;
     first_name: string;
     last_name: string;

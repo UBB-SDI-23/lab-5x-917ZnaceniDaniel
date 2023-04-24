@@ -4,9 +4,6 @@ import { Link, useParams } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-// import { TennisPlayer } from "../../models/TennisPlayer";
-// import { TennisPlayerFull} from "../../models/TennisPlayerFull";
-// import { BACKEND_API_URL } from "../../constants";
 import { AirportAllDetails } from "../../models/AirportAllDetails";
 import { BACKEND_API_URL } from "../../constants";
 

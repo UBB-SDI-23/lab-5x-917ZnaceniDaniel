@@ -1,7 +1,7 @@
 import { Aircraft } from "./Aircraft";
 import { Airport } from "./Airport";
 import { Ticket } from "./Ticket";
-export interface Flight{
+export interface FlightAllDetails{
     id:number;
     departure_airport:Airport;
     arrival_airport:Airport;

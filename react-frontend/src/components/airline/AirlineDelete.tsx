@@ -4,34 +4,34 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import axios from "axios";
 import { BACKEND_API_URL } from "../../constants";
 
-export const AirportDelete = () => {
-    const {airportId} = useParams();
+export const AirlineDelete = () => {
+    const {airlineId} = useParams();
+	console.log(airlineId);
     const navigate = useNavigate();
 
     const handleDelete = async(event: {preventDefault: () => void}) => {
-		console.log(`Deleting airport with ID: ${airportId}`);
+		console.log(`Deleting airline with ID: ${airlineId}`);
         event.preventDefault();
-		// console.log(`Deleting airport with ID: ${airportId}`);
-        await axios.delete(`${BACKEND_API_URL}/delete-airport/${airportId}/`);
-        navigate("/list-airport");
+        await axios.delete(`${BACKEND_API_URL}/delete-airline/${airlineId}/`);
+        navigate("/list-airline");
     };
 
     const handleCancel = (event: {preventDefault: () => void}) => {
         event.preventDefault();
-        navigate("/list-airport");
+        navigate("/list-airline");
     }
 
     return (
 		<Container>
 			<Card>
 				<CardContent>
-					<IconButton component={Link} sx={{ mr: 3 }} to={`/list-airport`}>
+					<IconButton component={Link} sx={{ mr: 3 }} to={`/list-airline`}>
 						<ArrowBackIcon />
 					</IconButton>{" "}
-					Are you sure you want to delete this airport? This cannot be undone!
+					Are you sure you want to delete this airline? This cannot be undone!
 				</CardContent>
 				<CardActions>
-					<Button onClick={handleDelete}>Delete it</Button>
+					<Button onClick={handleDelete}>Delete airline</Button>
 					<Button onClick={handleCancel}>Cancel</Button>
 				</CardActions>
 			</Card>

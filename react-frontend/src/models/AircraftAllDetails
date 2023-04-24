@@ -1,6 +1,6 @@
 import { Airline } from "./Airline";
 import { Flight } from "./Flight";
-export interface Aircraft {
+export interface AircraftAllDetails {
     id:number;
     name :string;
     manufacturer:string;

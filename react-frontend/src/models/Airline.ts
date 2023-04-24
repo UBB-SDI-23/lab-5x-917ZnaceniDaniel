@@ -1,4 +1,4 @@
-import { Aircraft } from "./Aircraft";
+
 
 export interface Airline{
     id:number;

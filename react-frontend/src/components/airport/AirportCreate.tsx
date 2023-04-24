@@ -15,8 +15,8 @@ export const AirportCreate = () => {
         timezone:"",
         elevation:0,
         capacity:0,
-        noGates:0,
-        noTerminals:0
+        no_gates:0,
+        no_terminals:0
     });
 
     const createAirport =async (event: { preventDefault: () => void}) => {
@@ -24,6 +24,7 @@ export const AirportCreate = () => {
         event.preventDefault();
         try {
             await axios.post(`${BACKEND_API_URL}/create-airport/`, airport);
+			console.log(airport)
             navigate("/list-airport/");
         } catch (error) {
             console.log(error);
@@ -37,7 +38,7 @@ export const AirportCreate = () => {
         <Container>
 			<Card>
 				<CardContent>
-					<IconButton  component={Link} sx={{ mr: 3 }} to={`/create-airport/`}>
+					<IconButton  component={Link} sx={{ mr: 3 }} to={`/list-airport/`}>
 						<ArrowBackIcon />
 					</IconButton>{" "}
 					<form onSubmit={createAirport}>
@@ -78,7 +79,7 @@ export const AirportCreate = () => {
 
                         <TextField
 							id="elevation"
-							label="Airport elevation "
+							label="Airport elevation"
 							variant="outlined"
 							fullWidth
 							sx={{ mb: 2 }}
@@ -100,7 +101,7 @@ export const AirportCreate = () => {
 							variant="outlined"
 							fullWidth
 							sx={{ mb: 2 }}
-							onChange={(event) => setAirport({ ...airport, noGates: Number(event.target.value )})}
+							onChange={(event) => setAirport({ ...airport, no_gates: Number(event.target.value )})}
 						/>
 						<TextField
 							id="noTerminals"
@@ -108,7 +109,7 @@ export const AirportCreate = () => {
 							variant="outlined"
 							fullWidth
 							sx={{ mb: 2 }}
-							onChange={(event) => setAirport({ ...airport, noTerminals: Number(event.target.value )})}
+							onChange={(event) => setAirport({ ...airport, no_terminals: Number(event.target.value )})}
 						/>
 
 						<Button type="submit">Add Airport</Button>
