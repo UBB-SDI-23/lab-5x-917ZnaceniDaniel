@@ -18,7 +18,7 @@ from base.serializers.AircraftSerializer import AircraftSerializer
 
 
 def get_airline_revenue_report():
-    aircrafts = Aircraft.objects.all()[:100]
+    aircrafts = Aircraft.objects.all()
     airlines_revenue = {}
     for aircraft in aircrafts:
         airline_name = aircraft.airline_name.name
