@@ -35,7 +35,7 @@ export const AirlineDetail = () => {
                 <p style={{textAlign:"left"}}> Established Date: {airline?.established_date ? new Date(airline.established_date).toLocaleDateString() : "Unknown"}</p>
                 <p style={{textAlign:"left"}}>Revenue: {airline?.revenue}</p>
                 <p style={{textAlign:"left"}}>Employee Count: {airline?.num_employees}</p>
-                <p style={{textAlign:"left"}}>Arrival Flights:</p>
+                <p style={{textAlign:"left"}}>Aircraft List:</p>
                 <ul>
                     {airline?.aircraft_list?.map((aircraft) => (
                         <li style={{textAlign:"left"}} key={aircraft.id}> Aircraft model: {aircraft.model} </li>
