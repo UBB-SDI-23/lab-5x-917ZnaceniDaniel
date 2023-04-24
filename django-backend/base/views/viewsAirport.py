@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.db.models import Count
 from django.shortcuts import get_object_or_404
 from rest_framework import status
@@ -36,30 +37,18 @@ def airportHomePageView(request):
 
 @api_view(['GET'])
 def airportList(request):
-    paginator = CustomPagination()
-    airports = Airport.objects.prefetch_related('departures').annotate(no_departing=Count('departures')).values()
-    cached_airport_data = cache.get('airport_data')
-    if cached_airport_data is None:
-        airport_data = []
-        for airport in airports:
-            airport_data.append({
-                'id': airport['id'],
-                'name': airport['name'],
-                'city': airport['city'],
-                'country': airport['country'],
-                'timezone': airport['timezone'],
-                'elevation': airport['elevation'],
-                'capacity': airport['capacity'],
-                'no_gates': airport['no_gates'],
-                'no_terminals': airport['no_terminals'],
-                'no_departing': airport['no_departing'],
-            })
-        cache.set('airport_data', airport_data, 3600)
-    else:
-        airport_data = cached_airport_data
-    paginated_airport_data = paginator.paginate_queryset(airport_data, request)
-    serializer = AirportSerializer(paginated_airport_data, many=True)
-    return paginator.get_paginated_response(serializer.data)
+    airports = Airport.objects.annotate(
+        no_departing=Count('departures')
+    ).values(
+        'id', 'name', 'city', 'country', 'timezone', 'elevation', 'capacity',
+        'no_gates', 'no_terminals', 'no_departing'
+    )
+
+    page = request.GET.get('page')
+    paginator = Paginator(airports, 10)  # Change 1000 to whatever page size you want
+    paginated_airports = paginator.get_page(page)
+    serializer = AirportSerializer(paginated_airports, many=True)
+    return Response(serializer.data)
 
 
 @api_view(['POST'])
