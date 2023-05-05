@@ -1,3 +1,4 @@
+import { Flight } from "./Flight";
 import { Ticket } from "./Ticket";
 
 export interface PassengerAllDetails{
@@ -7,5 +8,6 @@ export interface PassengerAllDetails{
     email:string;
     phone_number:string;
     citizenship:string;
-    tickets: Ticket[]
+    description:string;
+    flights: Flight[]
 }

@@ -1,4 +1,5 @@
 import random
+import sqlite3
 
 import psycopg2
 from faker import Faker
@@ -8,13 +9,13 @@ from django.utils import timezone
 # from myapp.models import Airline
 
 fake = Faker()
-
+# conn = sqlite3.connect('C:\\Users\\User\\Desktop\\lab-5x-917ZnaceniDaniel\\django-backend\\db.sqlite3')
 conn = psycopg2.connect(
-    host="ec2-13-50-17-123.eu-north-1.compute.amazonaws.com",
-    port="5432",
-    database="airport_management",
-    user="db_user",
-    password="db_pass"
+    host="127.0.0.1",
+    port="",
+    database="db.sqlite3",
+    user="",
+    password=""
 )
 cur = conn.cursor()
 
@@ -22,8 +23,8 @@ cur = conn.cursor()
 cur.execute('TRUNCATE TABLE base_aircraft RESTART IDENTITY CASCADE;')
 
 # generate new records to insert
-batch_size = 1000
-num_batches = 1000
+batch_size = 10
+num_batches = 10
 total_records = batch_size * num_batches
 models = ['A320', 'B737', 'A380', 'B747', 'B777', 'E190', 'CRJ700']
 for i in range(num_batches):

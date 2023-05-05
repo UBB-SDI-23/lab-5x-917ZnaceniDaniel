@@ -27,6 +27,16 @@ import { FlightCreate } from "./components/flight/FlightCreate";
 import { FlightDelete } from "./components/flight/FlightDelete";
 import { FlightUpdate } from "./components/flight/FlightUpdate";
 import { FlightDetail } from "./components/flight/FlightDetail";
+import { PassengerShowAll } from "./components/passenger/PassengerShowAll";
+import { PassengerCreate } from "./components/passenger/PassengerCreate";
+import { PassengerDelete } from "./components/passenger/PassengerDelete";
+import { PassengerUpdate } from "./components/passenger/PassengerUpdate";
+import { PassengerDetail } from "./components/passenger/PassengerDetail";
+import { TicketShowAll } from "./components/ticket/TicketShowAll";
+import { TicketCreate } from "./components/ticket/TicketCreate";
+import { TicketUpdate } from "./components/ticket/TicketUpdate";
+import { TicketDetail } from "./components/ticket/TicketDetail";
+import { TicketDelete } from "./components/ticket/TicketDelete";
 function App() {
   const [count, setCount] = useState(0);
 
@@ -75,6 +85,27 @@ function App() {
           />
           <Route path="update-flight/:flightId" element={<FlightUpdate />} />
           <Route path="read-flight/:flightId" element={<FlightDetail />} />
+
+
+
+          <Route path="/list-passenger/" element={<PassengerShowAll />} />
+          <Route path="/create-passenger/" element={<PassengerCreate />} />
+          <Route
+            path="/delete-passenger/:passengerId"
+            element={<PassengerDelete />}
+          />
+          <Route path="update-passenger/:passengerId" element={<PassengerUpdate />} />
+          <Route path="read-passenger/:passengerId" element={<PassengerDetail />} />
+
+          <Route path="/list-ticket/" element={<TicketShowAll />} />
+          <Route path="/create-ticket/" element={<TicketCreate />} />
+          <Route
+            path="/delete-ticket/:ticketId"
+            element={<TicketDelete />}
+          />
+          <Route path="update-ticket/:ticketId" element={<TicketUpdate />} />
+          <Route path="read-ticket/:ticketId" element={<TicketDetail />} />
+
         </Routes>
       </Router>
     </React.Fragment>

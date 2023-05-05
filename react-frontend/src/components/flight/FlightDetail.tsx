@@ -41,8 +41,8 @@ export const FlightDetail = () => {
                 <p style={{textAlign:"left"}}>Operating Aircraft: {flight?.operating_aircraft.name}</p>
                 <p style={{textAlign:"left"}}>Tickets:</p>
                 <ul>
-                    {flight?.tickets?.map((tickets) => (
-                        <li style={{textAlign:"left"}} key={tickets.id}> ticket booked on {tickets.booking_date.toLocaleString()} </li>
+                {flight?.passengers?.map((passengers) => (
+                        <li style={{textAlign:"left"}} key={passengers.id}> passenger{passengers.first_name} {passengers.last_name} </li>
                     ))}
                 </ul>
             </CardContent>

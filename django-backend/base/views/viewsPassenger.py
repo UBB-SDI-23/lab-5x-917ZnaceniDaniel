@@ -71,3 +71,12 @@ def deletePassenger(request, pk):
     passenger = Passenger.objects.get(id=pk)
     passenger.delete()
     return Response("Passenger successfully deleted!")
+
+
+@api_view(['GET'])
+def passengerOrderedName(request, name_filter):
+    paginator = CustomPagination()
+    list_of_passengers = Passenger.objects.filter(last_name__icontains=name_filter)
+    paginated_list_of_passengers = paginator.paginate_queryset(list_of_passengers, request)
+    serializer = PassengerSerializer(paginated_list_of_passengers, many=True)
+    return paginator.get_paginated_response(serializer.data)

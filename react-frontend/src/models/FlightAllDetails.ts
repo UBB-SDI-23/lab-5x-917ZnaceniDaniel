@@ -1,6 +1,6 @@
 import { Aircraft } from "./Aircraft";
 import { Airport } from "./Airport";
-import { Ticket } from "./Ticket";
+import { Passenger } from "./Passenger";
 export interface FlightAllDetails{
     id:number;
     departure_airport:Airport;
@@ -13,5 +13,5 @@ export interface FlightAllDetails{
     price :number
     seats_available :number;
     operating_aircraft:Aircraft;
-    tickets: Ticket[];
+    passengers: Passenger[];
 }

@@ -4,11 +4,12 @@ import LocalAirportIcon from '@mui/icons-material/LocalAirport';
 import FlightLandIcon from '@mui/icons-material/FlightLand';
 import AirlinesIcon from '@mui/icons-material/Airlines';
 import ConnectingAirportsIcon from '@mui/icons-material/ConnectingAirports';
+import HailIcon from '@mui/icons-material/Hail';
+import AirplaneTicketIcon from '@mui/icons-material/AirplaneTicket';
 
 export const AppMenu = () => {
     const location = useLocation();
     const path = location.pathname;
-
     return (
 <Box sx={{ flexGrow: 1 }}>
 			<AppBar position="static" sx={{ marginBottom: "20px" }}>
@@ -64,6 +65,26 @@ export const AppMenu = () => {
 						sx={{ mr: 5 }}
 						startIcon={<ConnectingAirportsIcon />}>
 						Flights
+					</Button>
+
+					<Button
+						variant={path.startsWith("/list-passenger") ? "outlined" : "text"}
+						to="/list-passenger"
+						component={Link}
+						color="inherit"
+						sx={{ mr: 5 }}
+						startIcon={<HailIcon />}>
+						Passengers
+					</Button>
+
+					<Button
+						variant={path.startsWith("/list-ticket") ? "outlined" : "text"}
+						to="/list-ticket"
+						component={Link}
+						color="inherit"
+						sx={{ mr: 5 }}
+						startIcon={<AirplaneTicketIcon />}>
+						Tickets
 					</Button>
 
 					<Button

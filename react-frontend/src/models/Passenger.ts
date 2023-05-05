@@ -5,4 +5,5 @@ export interface Passenger{
     email:string;
     phone_number:string;
     citizenship:string;
+    description :string;
 }

@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 
 import { useEffect, useState } from "react";
-import { Flight } from "../../models/Flight";
+import { Passenger } from "../../models/Passenger";
 import ReadMoreIcon from "@mui/icons-material/ReadMore";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
@@ -23,9 +23,9 @@ import { Link } from "react-router-dom";
 import { BACKEND_API_URL } from "../../constants";
 import { Paginator } from "../pagination/pagination";
 
-export const FlightShowAll = () => {
+export const PassengerShowAll = () => {
   const [loading, setLoading] = useState(true);
-  const [flights, setFlights] = useState([]);
+  const [passengers, setPassenger] = useState([]);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const current = (page - 1) * pageSize + 1;
@@ -54,13 +54,13 @@ export const FlightShowAll = () => {
   };
 
   // {console.log(BACKEND_API_URL)}
-  const feetchFlights = async () => {
+  const fetchPassengers = async () => {
     setLoading(true);
     const response = await fetch(
-      `${BACKEND_API_URL}/list-flight/?page=${page}&page_size=${pageSize}`
+      `${BACKEND_API_URL}/list-passenger/?page=${page}&page_size=${pageSize}`
     );
     const { count, next, previous, results } = await response.json();
-    setFlights(results);
+    setPassenger(results);
     setLoading(false);
 
     setTotalRows(count);
@@ -68,96 +68,87 @@ export const FlightShowAll = () => {
   };
 
   useEffect(() => {
-    feetchFlights();
+    fetchPassengers();
   }, [page]);
 
-  console.log(flights);
+  console.log(passengers);
 
-  const sortFlights = () => {
-    const sortedFlights = [...flights].sort((a: Flight, b: Flight) => {
-      if (a.price < b.price) {
-        return -1;
-      }
-      if (a.price > b.price) {
-        return 1;
-      }
-      return 0;
-    });
-    console.log(sortedFlights);
-    setFlights(sortedFlights);
-  };
+  // const sortAirports = () => {
+  //     const sortedAirports = [...passengers].sort((a: Airport, b:Airport) => {
+  //         if (a.no_terminals < b.no_terminals) {
+  //             return -1;
+  //         }
+  //         if (a.no_terminals > b.no_terminals) {
+  //             return 1;
+  //         }
+  //         return 0;
+
+  //     })
+  //     console.log(sortedAirports);
+  //     setPassenger(sortedAirports);
+  // }
 
   return (
     <Container>
-      <h1>All Flights</h1>
+      <h1>All Passengers</h1>
       {loading && <CircularProgress />}
 
-      {!loading && flights.length == 0 && <div>No flights found!</div>}
+      {!loading && passengers.length == 0 && <div>No passenger found!</div>}
 
       {!loading && (
-        <IconButton component={Link} sx={{ mr: 3 }} to={`../create-flight/`}>
-          <Tooltip title="Add a new flight" arrow>
+        <IconButton component={Link} sx={{ mr: 3 }} to={`../create-passenger/`}>
+          <Tooltip title="Add a new passenger" arrow>
             <AddIcon color="primary" />
           </Tooltip>
         </IconButton>
       )}
 
-      {!loading && (
-        <Button sx={{ color: "red" }} onClick={sortFlights}>
-          Sort Flights
-        </Button>
-      )}
+      {/* {!loading && (
+            <Button sx={{color:"red"}} onClick={sortAirports}>
+                Sort Airports
+            </Button>
+        )} */}
 
-      {!loading && flights.length > 0 && (
+      {!loading && passengers.length > 0 && (
         <>
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 900 }} aria-label="simple table">
               <TableHead>
                 <TableRow>
                   <TableCell>#</TableCell>
-                  <TableCell align="center">Departure Airport</TableCell>
-                  <TableCell align="center">Arrival Airport</TableCell>
-                  <TableCell align="center">CallSign</TableCell>
-                  <TableCell align="center">Departure Time</TableCell>
-                  <TableCell align="center">Arrival Time</TableCell>
-                  <TableCell align="center">Duration</TableCell>
-                  <TableCell align="center">Status</TableCell>
-                  <TableCell align="center">Price</TableCell>
-                  <TableCell align="center">Available Seats</TableCell>
+                  <TableCell align="center">First Name</TableCell>
+                  <TableCell align="center">Last Name</TableCell>
+                  <TableCell align="center">Email</TableCell>
+                  <TableCell align="center">Phone Number</TableCell>
+                  <TableCell align="center">Citizenship</TableCell>
+                  <TableCell align="center">Description</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {flights.map((flight: Flight, index) => (
-                  <TableRow key={flight.id}>
+                {passengers.map((passenger: Passenger, index) => (
+                  <TableRow key={passenger.id}>
                     <TableCell component="th" scope="row">
                       {index + current}
                     </TableCell>
+                    <TableCell align="center">{passenger.first_name}</TableCell>
+                    <TableCell align="center">{passenger.last_name}</TableCell>
+                    <TableCell align="center">{passenger.email}</TableCell>
                     <TableCell align="center">
-                      {flight.departure_airport.toLocaleString()}
+                      {passenger.phone_number}
                     </TableCell>
                     <TableCell align="center">
-                      {flight.arrival_airport.toLocaleString()}
-                    </TableCell>
-                    <TableCell align="center">{flight.call_sign}</TableCell>
-                    <TableCell align="center">
-                      {flight.departure_time.toLocaleString()}
+                      {passenger.citizenship}
                     </TableCell>
                     <TableCell align="center">
-                      {flight.arrival_time.toLocaleString()}
-                    </TableCell>
-                    <TableCell align="center">{flight.duration}</TableCell>
-                    <TableCell align="center">{flight.status}</TableCell>
-                    <TableCell align="center">{flight.price}</TableCell>
-                    <TableCell align="center">
-                      {flight.seats_available}
+                      {passenger.description}
                     </TableCell>
                     <TableCell align="right">
                       <IconButton
                         component={Link}
                         sx={{ mr: 3 }}
-                        to={`/read-flight/${flight.id}`}
+                        to={`/read-passenger/${passenger.id}`}
                       >
-                        <Tooltip title="View flight  details" arrow>
+                        <Tooltip title="View passenger  details" arrow>
                           <ReadMoreIcon color="primary" />
                         </Tooltip>
                       </IconButton>
@@ -165,7 +156,7 @@ export const FlightShowAll = () => {
                       <IconButton
                         component={Link}
                         sx={{ mr: 3 }}
-                        to={`../update-flight/${flight.id}/`}
+                        to={`../update-passenger/${passenger.id}/`}
                       >
                         <EditIcon />
                       </IconButton>
@@ -173,7 +164,7 @@ export const FlightShowAll = () => {
                       <IconButton
                         component={Link}
                         sx={{ mr: 3 }}
-                        to={`../delete-flight/${flight.id}/`}
+                        to={`../delete-passenger/${passenger.id}/`}
                       >
                         <DeleteForeverIcon sx={{ color: "red" }} />
                       </IconButton>
@@ -187,7 +178,7 @@ export const FlightShowAll = () => {
             Previous
           </Button>
           <Button
-            disabled={flights.length < pageSize}
+            disabled={passengers.length < pageSize}
             onClick={() => setPage(page + 1)}
           >
             Next

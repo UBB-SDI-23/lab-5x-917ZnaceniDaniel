@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 
 import { useEffect, useState } from "react";
-import { Flight } from "../../models/Flight";
+import { Ticket } from "../../models/Ticket";
 import ReadMoreIcon from "@mui/icons-material/ReadMore";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
@@ -23,9 +23,9 @@ import { Link } from "react-router-dom";
 import { BACKEND_API_URL } from "../../constants";
 import { Paginator } from "../pagination/pagination";
 
-export const FlightShowAll = () => {
+export const TicketShowAll = () => {
   const [loading, setLoading] = useState(true);
-  const [flights, setFlights] = useState([]);
+  const [tickets, setTickets] = useState([]);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const current = (page - 1) * pageSize + 1;
@@ -53,14 +53,13 @@ export const FlightShowAll = () => {
     setPage(page - 1);
   };
 
-  // {console.log(BACKEND_API_URL)}
-  const feetchFlights = async () => {
+  const fetchTickets = async () => {
     setLoading(true);
     const response = await fetch(
-      `${BACKEND_API_URL}/list-flight/?page=${page}&page_size=${pageSize}`
+      `${BACKEND_API_URL}/list-ticket/?page=${page}&page_size=${pageSize}`
     );
     const { count, next, previous, results } = await response.json();
-    setFlights(results);
+    setTickets(results);
     setLoading(false);
 
     setTotalRows(count);
@@ -68,96 +67,82 @@ export const FlightShowAll = () => {
   };
 
   useEffect(() => {
-    feetchFlights();
+    fetchTickets();
   }, [page]);
 
-  console.log(flights);
+  console.log(tickets);
 
-  const sortFlights = () => {
-    const sortedFlights = [...flights].sort((a: Flight, b: Flight) => {
-      if (a.price < b.price) {
-        return -1;
-      }
-      if (a.price > b.price) {
-        return 1;
-      }
-      return 0;
-    });
-    console.log(sortedFlights);
-    setFlights(sortedFlights);
-  };
+  // const sortAircrafts = () => {
+  //     const sortedAircrafts = [...tickets].sort((a: Aircraft, b:Aircraft) => {
+  //         if (a.wing_span < b.wing_span) {
+  //             return -1;
+  //         }
+  //         if (a.wing_span > b.wing_span) {
+  //             return 1;
+  //         }
+  //         return 0;
+  //     });
+  //     console.log(sortedAircrafts);
+  //     setTickets(sortedAircrafts);
+  // }
 
   return (
     <Container>
-      <h1>All Flights</h1>
+      <h1>All Tickets</h1>
       {loading && <CircularProgress />}
 
-      {!loading && flights.length == 0 && <div>No flights found!</div>}
+      {!loading && tickets.length == 0 && <div>No tickets found!</div>}
 
       {!loading && (
-        <IconButton component={Link} sx={{ mr: 3 }} to={`../create-flight/`}>
-          <Tooltip title="Add a new flight" arrow>
+        <IconButton component={Link} sx={{ mr: 3 }} to={`../create-ticket/`}>
+          <Tooltip title="Add a new ticket" arrow>
             <AddIcon color="primary" />
           </Tooltip>
         </IconButton>
       )}
 
-      {!loading && (
-        <Button sx={{ color: "red" }} onClick={sortFlights}>
-          Sort Flights
-        </Button>
-      )}
+      {/* {!loading && (
+            <Button sx={{color:"red"}} onClick={sortAircrafts}>
+                Sort Aircrafts
+            </Button>
+        )} */}
 
-      {!loading && flights.length > 0 && (
+      {!loading && tickets.length > 0 && (
         <>
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 900 }} aria-label="simple table">
               <TableHead>
                 <TableRow>
                   <TableCell>#</TableCell>
-                  <TableCell align="center">Departure Airport</TableCell>
-                  <TableCell align="center">Arrival Airport</TableCell>
-                  <TableCell align="center">CallSign</TableCell>
-                  <TableCell align="center">Departure Time</TableCell>
-                  <TableCell align="center">Arrival Time</TableCell>
-                  <TableCell align="center">Duration</TableCell>
-                  <TableCell align="center">Status</TableCell>
-                  <TableCell align="center">Price</TableCell>
-                  <TableCell align="center">Available Seats</TableCell>
+                  <TableCell align="center">Flight</TableCell>
+                  <TableCell align="center">Passenger</TableCell>
+                  <TableCell align="center">Seat Number</TableCell>
+                  <TableCell align="center">Booking Date</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {flights.map((flight: Flight, index) => (
-                  <TableRow key={flight.id}>
+                {tickets.map((ticket: Ticket, index) => (
+                  <TableRow key={ticket.id}>
                     <TableCell component="th" scope="row">
                       {index + current}
                     </TableCell>
                     <TableCell align="center">
-                      {flight.departure_airport.toLocaleString()}
+                      {ticket.flight.call_sign}
                     </TableCell>
                     <TableCell align="center">
-                      {flight.arrival_airport.toLocaleString()}
+                      {ticket.passenger.first_name} {ticket.passenger.last_name}
                     </TableCell>
-                    <TableCell align="center">{flight.call_sign}</TableCell>
+                    <TableCell align="center">{ticket.seat_number}</TableCell>
                     <TableCell align="center">
-                      {flight.departure_time.toLocaleString()}
-                    </TableCell>
-                    <TableCell align="center">
-                      {flight.arrival_time.toLocaleString()}
-                    </TableCell>
-                    <TableCell align="center">{flight.duration}</TableCell>
-                    <TableCell align="center">{flight.status}</TableCell>
-                    <TableCell align="center">{flight.price}</TableCell>
-                    <TableCell align="center">
-                      {flight.seats_available}
+                      {ticket.booking_date.toLocaleString()}
                     </TableCell>
                     <TableCell align="right">
                       <IconButton
                         component={Link}
                         sx={{ mr: 3 }}
-                        to={`/read-flight/${flight.id}`}
+                        to={`/read-ticket/${ticket.id}`}
                       >
-                        <Tooltip title="View flight  details" arrow>
+                        <Tooltip title="View Ticket  details" arrow>
                           <ReadMoreIcon color="primary" />
                         </Tooltip>
                       </IconButton>
@@ -165,7 +150,7 @@ export const FlightShowAll = () => {
                       <IconButton
                         component={Link}
                         sx={{ mr: 3 }}
-                        to={`../update-flight/${flight.id}/`}
+                        to={`../update-ticket/${ticket.id}/`}
                       >
                         <EditIcon />
                       </IconButton>
@@ -173,7 +158,7 @@ export const FlightShowAll = () => {
                       <IconButton
                         component={Link}
                         sx={{ mr: 3 }}
-                        to={`../delete-flight/${flight.id}/`}
+                        to={`../delete-ticket/${ticket.id}/`}
                       >
                         <DeleteForeverIcon sx={{ color: "red" }} />
                       </IconButton>
@@ -187,11 +172,12 @@ export const FlightShowAll = () => {
             Previous
           </Button>
           <Button
-            disabled={flights.length < pageSize}
+            disabled={tickets.length < pageSize}
             onClick={() => setPage(page + 1)}
           >
             Next
           </Button> */}
+
           <Paginator
             rowsPerPage={pageSize}
             totalRows={totalRows}

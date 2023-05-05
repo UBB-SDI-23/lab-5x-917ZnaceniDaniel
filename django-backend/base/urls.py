@@ -66,4 +66,6 @@ urlpatterns = [
     path('airlineOrderedName/<str:name_filter>/', airlineOrderedName),
     path('airportOrderedName/<str:name_filter>/', airportOrderedName),
     path('aircraftOrderedName/<str:name_filter>/', aircraftOrderedName),
+    path('flightOrderedName/<str:name_filter>/', flightOrderedName),
+    path('passengerOrderedName/<str:name_filter>/', passengerOrderedName),
 ]
